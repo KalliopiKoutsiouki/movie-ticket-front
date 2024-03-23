@@ -1,1 +1,4 @@
+<ng-container *ngIf="isLoggedIn">
+<app-navigation-bar [user]="currentUser"></app-navigation-bar>
+</ng-container>
 <router-outlet></router-outlet>

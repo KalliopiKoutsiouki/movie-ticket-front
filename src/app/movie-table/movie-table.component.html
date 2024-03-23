@@ -1,0 +1,29 @@
+<div class="table-container">
+    <table class="table table-striped">
+     <thead>
+        <tr >
+          <th colspan="2">Playing Now </th>
+        </tr>
+      </thead> 
+      <tbody>
+        <tr *ngFor="let movie of movies">
+          <td style="width: 150px;">
+            <img [src]="movie.picture" alt="{{ movie.name }}" class="movie-picture">
+          </td>
+          <td>
+            <div class="movie-details">
+              <div class="movie-name">{{ movie.name }}</div>
+              <hr class="rounded">
+              <div class="description font-weight-light" >
+                {{movie.description}}
+              </div>
+              <div class="hall-details"> {{movie.hall.name}}</div>
+              <button class="outlined-button">Book</button>
+              <div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

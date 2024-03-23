@@ -5,14 +5,15 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Observable} from 'rxjs';
 import { User } from '../model/user';
-import { map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable(
   {providedIn: 'root'}
 )
 export class UserService {
   private baseUrl = environment.backendBaseUrl;
-
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
   constructor(private http:HttpClient, private router: Router, private authService: AuthService) { }
  
 
@@ -48,6 +49,15 @@ export class UserService {
       })
     };
      return this.http.get<User>(`${this.baseUrl}/users/${userId}`, headerOptions)    
+  }
+
+  
+  setCurrentUser(user: any) {
+    this.currentUserSubject.next(user);
+  }
+
+  getCurrentUser() {
+    return this.currentUserSubject.value;
   }
 
 }

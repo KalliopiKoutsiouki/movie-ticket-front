@@ -11,13 +11,27 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent} from './home/home.component';
 import { OAuthCallbackComponentComponent } from './oauth-callback-component/oauth-callback-component.component';
+import { MovieTableComponent } from './movie-table/movie-table.component';
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { MatCheckboxModule } from '@angular/material/checkbox';
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+// import { MatInputModule } from '@angular/material/input';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    OAuthCallbackComponentComponent,
+    MovieTableComponent,
+    NavigationBarComponent,
+    OAuthCallbackComponentComponent
     
   ],
   imports: [
@@ -26,7 +40,16 @@ import { OAuthCallbackComponentComponent } from './oauth-callback-component/oaut
     FormsModule,
     HttpClientModule,
     RouterOutlet,
-    RouterModule
+    RouterModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTabsModule,
+    BrowserAnimationsModule
+    // MatDatepickerModule,
+    // MatCheckboxModule,
+    // MatInputModule
   ],
   providers: [AuthService, UserService, MovieService],
   bootstrap: [AppComponent]

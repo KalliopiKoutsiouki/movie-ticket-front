@@ -1,42 +1,29 @@
-.table {
-    width: 100%; 
-    margin: 0 auto; /* Center the table horizontally */
+.welcome-container {
+    text-align: center;
+    margin-bottom: 20px;
   }
   
-  .table td:nth-child(2) {
-    max-width: 200px; /* Fixed width for the second column */
-    overflow: hidden; /* Hide overflow content */
-    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
-    white-space: nowrap; /* Prevent text wrapping in the second column */
-}
-  .table th {
-    background-color: #f8f9fa; /* Header background color */
+  .welcome-text {
+    font-family: 'Bebas Neue', sans-serif;
+    color: #102829; /* or any other color you prefer */
   }
 
-  .table-container {
-    max-width: 60vw;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff; /* White */
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  .image-container {
+    display: flex;
+    height: 150px; /* Adjust the height as per your requirement */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-
-  .table-btn {
-    width: auto; /* Automatically adjust the width based on content */
-    margin-top: 5px; /* Add margin between description and buttons */
-    display: inline-block; /* Make buttons inline-block */
+  
+  .image-item {
+    height: 80%;
+    width: 100%;
+    margin-right: 10px; /* Adjust the spacing between images */
+    margin-left:10px;
   }
+ 
 
 
-  .movie-picture {
-    max-width: 100px; /* Limit the width of the picture */
-}
-
-.movie-name {
-    font-weight: bold; /* Make the movie name bold */
-}
-
-.description {
-    margin-top: 10px; /* Add margin between name and description */
-}

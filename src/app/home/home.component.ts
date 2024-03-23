@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     this.getUserName();
     this.getAllMovies();
+    
  };
 
 //  getTokenIfFromGoogle(): void { 
@@ -58,6 +59,7 @@ export class HomeComponent implements OnInit{
     .pipe(
       tap((movies: Movie[]) => {
         this.movies = movies;
+        console.log(this.movies);
       }),
       
     )

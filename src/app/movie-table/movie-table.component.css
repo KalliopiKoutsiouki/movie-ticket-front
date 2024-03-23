@@ -1,0 +1,97 @@
+.table {
+    width: 100%; 
+    margin: 0 auto; /* Center the table horizontally */
+  }
+  
+  .table td:nth-child(2) {
+    /* max-width: 200px; Fixed width for the second column */
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
+    white-space: nowrap; /* Prevent text wrapping in the second column */
+}
+  .table th {
+    background-color: #f8f9fa; /* Header background color */
+  }
+
+  .table-container {
+    max-width: 60vw;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff; /* White */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+
+  button.outlined-button {
+    border: 2px solid #3f51b5; /* Greenish border color */
+    background-color: transparent; /* Transparent background */
+    color: #3f51b5; /* Greenish text color */
+    padding: 8px 10px; /* Adjust padding as needed */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Smooth transition for hover effect */
+    display: inline-block;
+    width: auto; 
+  }
+
+button.outlined-button:hover {
+    background-color: #3f51b5; /* Hover background color */
+    color: white; /* Hover text color */
+}
+/* 
+  .table-btn {
+   width: auto;   
+   display: inline-block;
+    padding: 10px;
+    background-color: #3e822d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 7px;
+  }
+
+  .table-btn:hover {
+    background-color: #2e6622; 
+  } */
+
+
+  .movie-picture {
+    max-width: 100px; /* Limit the width of the picture */
+}
+
+.movie-name {
+    font-weight: bold; /* Make the movie name bold */
+}
+
+
+.description {
+    margin-top: 10px; /* Add margin between name and description */
+    font-style: oblique;
+    word-wrap: break-word;
+    white-space: pre-wrap; /* To preserve white spaces */
+    
+      
+  }
+
+  .hall-details {
+    margin-top: 10px; /* Add margin between name and description */
+    color: #909090;
+  }
+
+
+th {
+  font-size: 20px; /* Adjust the font size as needed */
+  margin: 30px; /* Adjust the margin as needed */
+  padding: 15px;
+}
+
+td {
+  /* margin-bottom:50px; */
+  padding: 30px;
+}
+
+
+
+

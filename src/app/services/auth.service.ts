@@ -3,12 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environment';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable(
   {providedIn: 'root'}
 )
 export class AuthService {
   private baseUrl = environment.backendBaseUrl;
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private headerOptions : any = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -31,6 +33,7 @@ export class AuthService {
         if (token) {
           localStorage.setItem('currentUser', JSON.stringify({ username, token }));
           localStorage.setItem('userName', username);
+          this.loggedIn.next(true);
           this.router.navigate(['/home']);  ;
         }
       });
@@ -71,13 +74,18 @@ export class AuthService {
     return this.http.get(googleLoginUrl)
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('currentUser'); 
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedIn.asObservable();
   }
+
+  // isLoggedIn(): boolean {
+  //   return !!localStorage.getItem('currentUser'); 
+  // }
 
   logout() {
     // Remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    this.loggedIn.next(false);
   }
 
   getCurrentUser(): any {

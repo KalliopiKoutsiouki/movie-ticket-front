@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,19 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit{
   title = 'movie-ticket-front';
-
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) { }
+  currentUser = null;
+  isLoggedIn: boolean;
+  constructor(private userService: UserService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn;
+      const user = this.authService.getCurrentUser();
+      if (user) {
+        this.currentUser = user;
+      }
+    });
+  }
   // const code = this.route.snapshot.queryParamMap.get('code');
   // console.log(code);
   // console.log(this.route)
@@ -21,7 +31,7 @@ export class AppComponent implements OnInit{
   //     if (code !== undefined) {
     //   }
     // })
-  }
+  
 
   // ngOnInit(): void {
   //   const code = this.getQueryParam('code');
@@ -34,9 +44,9 @@ export class AppComponent implements OnInit{
   // }
 
 
-  getQueryParam(key): string {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    return urlParams.get(key);
-}
+//   getQueryParam(key): string {
+//     const queryString = window.location.search;
+//     const urlParams = new URLSearchParams(queryString);
+//     return urlParams.get(key);
+// }
 }

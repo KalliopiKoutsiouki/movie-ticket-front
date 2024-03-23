@@ -1,0 +1,14 @@
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+  }
+
+  mat-toolbar {
+    background-color: #000000; /* Black background */
+    color: white; /* Text color */
+    border-bottom: 1px solid rgb(255, 255, 255); /* Add this line to add a black line at the bottom */
+  }
+
+  .button-nav {
+    color:white !important
+  }

@@ -5,7 +5,7 @@ export interface Movie {
     id: number;
     description: string;
     name: string;
-    pircureUrl: string;
+    picture: string;
     dateRange: DateRange;
     hall: Hall;
   }
