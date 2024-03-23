@@ -34,7 +34,8 @@ body {
   }
   
   input[type="text"],
-  input[type="password"] {
+  input[type="password"],
+  input[type="email"] {
     width: calc(100% - 10px);
     padding: 10px;
     margin-bottom: 15px;
@@ -61,9 +62,7 @@ body {
 
 
   
-  .button-nav:hover {
-    background-color: #b3b0b073; /* Darker green on hover */
-  }
+
   button:hover {
     background-color: #000000; /* Darker green on hover */
   }

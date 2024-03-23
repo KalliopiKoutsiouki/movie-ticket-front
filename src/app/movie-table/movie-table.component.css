@@ -10,7 +10,8 @@
     white-space: nowrap; /* Prevent text wrapping in the second column */
 }
   .table th {
-    background-color: #f8f9fa; /* Header background color */
+    /* background-color:; */
+    color: grey;
   }
 
   .table-container {

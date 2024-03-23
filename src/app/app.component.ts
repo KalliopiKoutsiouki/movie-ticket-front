@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +13,16 @@ export class AppComponent implements OnInit{
   title = 'movie-ticket-front';
   currentUser = null;
   isLoggedIn: boolean;
-  constructor(private userService: UserService, private authService: AuthService) { }
+  constructor(private userService: UserService, private authService: AuthService, private router:Router) { }
 
   ngOnInit(): void {
-    this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
-      this.isLoggedIn = loggedIn;
-      const user = this.authService.getCurrentUser();
-      if (user) {
-        this.currentUser = user;
-      }
+    // this.authService.isLoggedIn().subscribe((loggedIn: boolean) => {
+    //   this.isLoggedIn = loggedIn;
+    // });
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.isLoggedIn = !['/login', '/register'].includes(event.url);
     });
   }
   // const code = this.route.snapshot.queryParamMap.get('code');

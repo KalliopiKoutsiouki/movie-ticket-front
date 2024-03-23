@@ -13,11 +13,11 @@ import { Movie } from '../model/movie';
     constructor(private http:HttpClient,  private authService: AuthService) { }
 
     getAllMovies(): Observable<Movie[]> {
-        const token = this.authService.getJwtToken();
+        // const token = this.authService.getJwtToken();
         const headerOptions = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            // 'Authorization': `Bearer ${token}`
           })
         };
          return this.http.get<Movie[]>(`${this.baseUrl}/movies/all`, headerOptions)    

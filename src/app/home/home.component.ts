@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
 import { User } from '../model/user';
 import { Movie } from '../model/movie';
-import { ActivatedRoute} from '@angular/router';
-import { Router } from '@angular/router';
 import { tap} from 'rxjs';
 import { MovieService } from '../services/movies.service';
+import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-home',
@@ -14,14 +13,15 @@ import { MovieService } from '../services/movies.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
-
+  isLoggedIn$: Observable<boolean>;
   user: User;
   movies: Movie[] = [];
+ 
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService, private movieService: MovieService){}
+  constructor(private movieService: MovieService, private authService: AuthService){}
 
   ngOnInit(): void {
-    this.getUserName();
+    this.isLoggedIn$ = this.authService.isLoggedIn();
     this.getAllMovies();
     
  };
@@ -45,14 +45,6 @@ export class HomeComponent implements OnInit{
   //     .subscribe();
   // }
 
-  getUserName(): void {
-    const userDetails = this.authService.getCurrentUser();
-    const name = userDetails.username;
-    const userId =  1;
-    this.userService.getUserByUserName(name).subscribe(user => {
-      this.user = user;
-  })
-}
 
   getAllMovies() : void {
     this.movieService.getAllMovies()

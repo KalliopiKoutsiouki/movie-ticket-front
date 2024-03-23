@@ -10,19 +10,35 @@ import { Observable } from 'rxjs';
   styleUrl: './navigation-bar.component.css'
 })
 export class NavigationBarComponent implements OnInit{
-  @Input() user: any; 
+  user:any = null;
   isLoggedIn$: Observable<boolean>;
   constructor(private router: Router, private authService: AuthService, private userService: UserService) { }
+  isDropdownOpen: boolean = false;
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isLoggedIn();
-   console.log(this.user);
+    this.user = this.authService.getCurrentUser();
+    console.log(this.user);
   }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
   logout() {
     // Call your authentication service's logout method
     this.authService.logout();
     // Redirect to the login page or any other desired page
     this.router.navigate(['/login']);
+  }
+
+  login () {
+    this.router.navigate(['/login']);
+  }
+
+  register() {
+    this.logout();
+    this.router.navigate(['/register']);
   }
 
 }

@@ -4,12 +4,27 @@
     <div>
       <button mat-button class="button-nav" routerLink="/home">Home</button>
       <button mat-button class="button-nav" routerLink="/hall">Hall</button>
-      <button mat-button class="button-nav" routerLink="/hall">Contact</button>
     </div>
     <div class="fill-remaining-space"></div>
-    <div>
+    <!-- <div>
    
     <button mat-button class="button-nav"(click)="logout()">   <mat-icon>account_circle</mat-icon> {{user?.username}}  Logout
   </button>
+</div> -->
+<div class="dropdown">
+  <button mat-button class="button-nav dropdown-button " (click)="toggleDropdown()">
+      <mat-icon>account_circle</mat-icon>
+      {{user?.username}}
+  </button>
+  <div class="dropdown-content" [ngClass]="{'show-dropdown': isDropdownOpen, 'hide-dropdown': !isDropdownOpen}">
+    <div *ngIf="!(isLoggedIn$ | async)">
+      <button mat-button class="button-nav dropdown-button" (click)="login()">Login</button>
+      <button mat-button class="button-nav dropdown-button " (click)="register()">Register</button>
+    </div>
+    <div *ngIf="isLoggedIn$ | async">
+      <button mat-button class="button-nav dropdown-button " (click)="logout()">Logout</button>
+    </div>
+
+  </div>
 </div>
 </mat-toolbar>

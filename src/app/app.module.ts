@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegistrationComponent } from './registration/registration.component';
 // import { MatCheckboxModule } from '@angular/material/checkbox';
 // import { MatDatepickerModule } from '@angular/material/datepicker';
 // import { MatInputModule } from '@angular/material/input';
@@ -31,7 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     MovieTableComponent,
     NavigationBarComponent,
-    OAuthCallbackComponentComponent
+    OAuthCallbackComponentComponent,
+    RegistrationComponent
     
   ],
   imports: [

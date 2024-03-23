@@ -17,8 +17,10 @@
               <div class="description font-weight-light" >
                 {{movie.description}}
               </div>
+              <div *ngIf="isLoggedIn$ | async">
               <div class="hall-details"> {{movie.hall.name}}</div>
               <button class="outlined-button">Book</button>
+            </div>
               <div>
               </div>
             </div>
