@@ -1,0 +1,40 @@
+.table {
+    width: 100%;
+    margin: 0 auto; /* Center the table horizontally */
+}
+
+.table td:nth-child(2) {
+    /* max-width: 200px; Fixed width for the second column */
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
+    white-space: nowrap; /* Prevent text wrapping in the second column */
+}
+
+.table th {
+    /* background-color:; */
+    color: grey;
+}
+
+.table-container {
+    max-width: 60vw;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff; /* White */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.movie-name {
+    font-weight: bold; /* Make the movie name bold */
+}
+
+th {
+    font-size: 20px; /* Adjust the font size as needed */
+    margin: 30px; /* Adjust the margin as needed */
+    padding: 15px;
+}
+
+td {
+    /* margin-bottom:50px; */
+    padding: 30px;
+}

@@ -1,0 +1,28 @@
+<div class="table-container">
+    <table class="table table-striped">
+        <thead>
+            <!-- <tr>
+                <th>Movie Name</th>
+                <th>Hour</th>
+                <th>People</th>
+                <th>Actions</th>
+            </tr> -->
+        </thead>
+        <tbody>
+            <tr *ngFor="let reservation of reservations">
+                <td>{{ reservation.movie.name }}</td>
+                <td>{{ reservation.hour.fromHour }} - {{ reservation.hour.toHour }}</td>
+                <td>{{ reservation.selectedDate }} </td>
+                <td>{{ reservation.numberOfSeats }}</td>
+                <td>
+                    <button mat-icon-button color="primary" (click)="editReservation(reservation)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteReservation(reservation.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

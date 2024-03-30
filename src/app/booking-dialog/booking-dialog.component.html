@@ -1,0 +1,58 @@
+ <div class="modal-container"> 
+    <h2>Reservation</h2>
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6">
+        <form class="text-center">
+          <div *ngIf="!reservationConfirmed">
+            <mat-form-field>
+              <mat-label>Select number of seats</mat-label>
+            <input matInput type="number" [(ngModel)]="numberOfSeats" min="1" name="number-of-seats-field"  placeholder="Number of seats" class="form-control" required>
+          </mat-form-field>  
+
+          <mat-form-field class="date-picker-field">
+            <mat-label>Pick a date</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" class="date-picker-input" (dateChange)="onDateChange($event)" name="selectedDate" [(ngModel)]="selectedDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          
+          <!-- Time selection step -->
+          <div *ngIf="selectedDate && !reservationConfirmed">
+            <h4>Pick available time</h4>
+            <mat-radio-group [(ngModel)]="selectedTime"  name="selectedTime" class="custom-radio-group">
+              <mat-radio-button *ngFor="let time of proposedTimes" [value]="time" class="custom-radio-button">{{ time.fromHour }} - {{ time.toHour }}</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div *ngIf="selectedTime">
+            <button class="" (click)="confirmSelection()">Next</button>
+            <button class="" (click)="resetSelection()">Back</button>
+          </div>
+        </div>
+          <div *ngIf="reservationConfirmed">
+            <ul class="reservation-list">
+              <li>
+                <mat-icon class="check-icon">check_circle</mat-icon><span class="gray">Movie: {{ movie.name }}</span>
+              </li>
+              <li>
+                <mat-icon class="check-icon">check_circle</mat-icon><span class="gray">Date: {{ selectedDate | date }}</span> 
+              </li>
+              <li>
+                <mat-icon class="check-icon">check_circle</mat-icon><span class="gray">Time: {{ selectedTime }}</span>
+              </li>
+              <li>
+                <mat-icon class="check-icon">check_circle</mat-icon><span class="gray"> User: {{ userName }}</span>
+              </li> <li>
+                <mat-icon class="check-icon">check_circle</mat-icon><span class="gray"> Seats: {{ numberOfSeats }}</span>
+              </li>
+            </ul>
+          
+            <div class="button-container">
+              <button class="purple-button" (click)="finalConfirmation()">Confirm</button>
+              <button class="close-button" (click)="closeDialog()">Cancel</button>
+            </div>
+          </div>
+        
+        </form>
+      </div>
+    </div>
+ </div> 

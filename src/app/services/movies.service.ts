@@ -22,4 +22,22 @@ import { Movie } from '../model/movie';
         };
          return this.http.get<Movie[]>(`${this.baseUrl}/movies/all`, headerOptions)    
       }
+
+      fetchCurrentMovies(): Observable<Movie[]> {
+        const headerOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+          })
+        };
+         return this.http.get<Movie[]>(`${this.baseUrl}/movies/currentMovies`, headerOptions)    
+      }
+
+      fetchUpcomingMovies(): Observable<Movie[]> {
+        const headerOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+          })
+        };
+         return this.http.get<Movie[]>(`${this.baseUrl}/movies/upcomingMovies`, headerOptions)    
+      }
   }

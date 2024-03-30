@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
+import { Component, Input, OnInit  } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { BookingDialogComponent } from '../booking-dialog/booking-dialog.component';
+import { Movie } from '../model/movie';
+
+import { ReservationService } from '../services/reservation.service';
 
 @Component({
   selector: 'app-movie-table',
@@ -12,13 +13,38 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './movie-table.component.css'
 })
 export class MovieTableComponent implements OnInit {
-  
-  @Input() movies: any[] = [];
-  isLoggedIn$: Observable<boolean>;
 
-  constructor( private authService: AuthService){}
+  @Input() movies: any[] = [];
+  @Input() type: 'currentMovies' | 'upcomingMovies';
+  isLoggedIn$: Observable<boolean>;
+  disableButton: boolean = true;
+
+  constructor( private authService: AuthService, private reservationService: ReservationService, public dialog: MatDialog){}
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isLoggedIn();
-  }
+    this.disableButton = true;
 }
+
+  openModal(movie:Movie): void {
+    const dialogRef = this.dialog.open(BookingDialogComponent, {
+      width: '350px',
+      data: { movie: movie } 
+    });
+
+    dialogRef.componentInstance.reservationConfirmedChange.subscribe(
+      (updatedMovie: Movie) => {
+        const index = this.movies.findIndex(m => m.id === updatedMovie.id);
+        if (index !== -1) {
+          this.movies[index].bookedForUser = true;
+        }
+      }
+    );
+
+     dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  }
+
+

@@ -1,8 +1,9 @@
 <div class="table-container">
+  
     <table class="table table-striped">
      <thead>
         <tr >
-          <th colspan="2">Playing Now </th>
+          <!-- <th colspan="2">FROM - TO</th> -->
         </tr>
       </thead> 
       <tbody>
@@ -17,9 +18,9 @@
               <div class="description font-weight-light" >
                 {{movie.description}}
               </div>
-              <div *ngIf="isLoggedIn$ | async">
+              <div *ngIf="type === 'currentMovies' && (isLoggedIn$ | async)">
               <div class="hall-details"> {{movie.hall.name}}</div>
-              <button class="outlined-button">Book</button>
+              <button [disabled]="movie.bookedForUser"  [ngClass]="{'disabled-button': movie.bookedForUser}"    class="outlined-button" (click)="openModal(movie)"> {{ movie.bookedForUser ? 'Booked' : 'Book' }}</button>
             </div>
               <div>
               </div>

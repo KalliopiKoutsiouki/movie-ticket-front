@@ -1,26 +1,25 @@
-<div class="image-container">
+<div class="image-container gray-background">
   <img src="https://cdn.pixabay.com/photo/2014/04/24/17/22/film-331553_1280.png" alt="Image 3" class="image-item">
 </div>
 <mat-tab-group centered  class="custom-tab-group">
-<mat-tab label="All Movies">
+<mat-tab label="PLAYING NOW">
   <div class="">
-    <app-movie-table [movies]="movies"></app-movie-table>
+    <app-movie-table [movies]="currentMovies" type="currentMovies"></app-movie-table>
   </div>
 </mat-tab>
 <div *ngIf="isLoggedIn$ | async">
-<mat-tab label=" Your Reservations" >
+<mat-tab label=" YOUR RESERVATIONS" >
   <div>
     <h2>Your Reservations</h2>
   </div>
   <div class="">
-    <!-- Replace with your reservation table component -->
-    <!-- <app-reservation-table [reservations]="reservations"></app-reservation-table> -->
+    <app-reservation-table ></app-reservation-table>
   </div>
 </mat-tab>
 </div>
-<mat-tab label="Upcoming Movies">
+<mat-tab label="UPCOMING MOVIES">
   <div class="">
-    <app-movie-table [movies]="movies"></app-movie-table>
+    <app-movie-table [movies]="upcomingMovies" type="upcomingMovies"></app-movie-table>
   </div>
 </mat-tab>
 

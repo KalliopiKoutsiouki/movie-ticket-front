@@ -5,7 +5,8 @@ export interface Movie {
     id: number;
     description: string;
     name: string;
-    picture: string;
+    picture: any;
     dateRange: DateRange;
     hall: Hall;
+    bookedForUser?:boolean;
   }
