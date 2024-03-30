@@ -7,7 +7,7 @@
     <app-movie-table [movies]="currentMovies" type="currentMovies"></app-movie-table>
   </div>
 </mat-tab>
-<div *ngIf="isLoggedIn$ | async">
+<div *ngIf="isLoggedIn">
 <mat-tab label=" YOUR RESERVATIONS" >
   <div>
     <h2>Your Reservations</h2>

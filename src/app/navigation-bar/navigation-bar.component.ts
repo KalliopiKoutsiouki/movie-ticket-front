@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -11,12 +10,14 @@ import { Observable } from 'rxjs';
 })
 export class NavigationBarComponent implements OnInit{
   user:any = null;
-  isLoggedIn$: Observable<boolean>;
+  isLoggedIn: boolean = false;
   constructor(private router: Router, private authService: AuthService, private userService: UserService) { }
   isDropdownOpen: boolean = false;
 
   ngOnInit(): void {
-    this.isLoggedIn$ = this.authService.isLoggedIn();
+    this.authService.isLoggedIn.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+    });
     this.user = this.authService.getCurrentUser();
     console.log(this.user);
   }
@@ -26,9 +27,7 @@ export class NavigationBarComponent implements OnInit{
   }
 
   logout() {
-    // Call your authentication service's logout method
     this.authService.logout();
-    // Redirect to the login page or any other desired page
     this.router.navigate(['/login']);
   }
 

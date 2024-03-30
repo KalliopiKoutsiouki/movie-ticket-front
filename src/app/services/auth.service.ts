@@ -23,7 +23,9 @@ export class AuthService {
   // private clientSecret = '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';
   // private redirectUri = 'http://localhost:4200/home/login/oauth2/code/google';
 
-  constructor(private http:HttpClient, private router: Router) { }
+  constructor(private http:HttpClient, private router: Router) {
+    this.checkToken(); 
+  }
 
   login(username: string, password: string) {
     return this.http.post<string>(`${this.baseUrl}/auth/generateToken`, { username, password }, this.headerOptions)
@@ -33,11 +35,24 @@ export class AuthService {
         if (token) {
           localStorage.setItem('currentUser', JSON.stringify({ username, token }));
           localStorage.setItem('userName', username);
+          
           this.loggedIn.next(true);
-          this.router.navigate(['/home']);  ;
+          this.router.navigate(['/home']);
         }
       });
   }
+
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
+  }
+
+  private checkToken() {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      this.loggedIn.next(true);
+    }
+  }
+
 
  getGoogleToken(code:string): Observable<any> {
     return this.http.get(`${this.baseUrl}/auth/callback?code="` + code, {headers: new HttpHeaders({
@@ -74,9 +89,9 @@ export class AuthService {
     return this.http.get(googleLoginUrl)
   }
 
-  isLoggedIn(): Observable<boolean> {
-    return this.loggedIn.asObservable();
-  }
+  // isLoggedIn(): Observable<boolean> {
+  //   return this.loggedIn.asObservable();
+  // }
 
   // isLoggedIn(): boolean {
   //   return !!localStorage.getItem('currentUser'); 

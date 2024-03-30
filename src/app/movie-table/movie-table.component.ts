@@ -16,14 +16,15 @@ export class MovieTableComponent implements OnInit {
 
   @Input() movies: any[] = [];
   @Input() type: 'currentMovies' | 'upcomingMovies';
-  isLoggedIn$: Observable<boolean>;
+  isLoggedIn: boolean = false;
   disableButton: boolean = true;
 
   constructor( private authService: AuthService, private reservationService: ReservationService, public dialog: MatDialog){}
 
   ngOnInit(): void {
-    this.isLoggedIn$ = this.authService.isLoggedIn();
-    this.disableButton = true;
+    this.authService.isLoggedIn.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+    });
 }
 
   openModal(movie:Movie): void {

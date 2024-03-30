@@ -15,7 +15,8 @@ import { UserService } from '../services/user.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
-  isLoggedIn$: Observable<boolean>;
+  // isLoggedIn$: Observable<boolean>;
+  isLoggedIn: boolean = false;
   user: User;
   currentMovies: Movie[] = [];
   upcomingMovies: Movie[] = [];
@@ -25,7 +26,9 @@ export class HomeComponent implements OnInit{
   constructor(private movieService: MovieService, private authService: AuthService, private userService: UserService ){}
 
   ngOnInit(): void {
-    this.isLoggedIn$ = this.authService.isLoggedIn();
+    this.authService.isLoggedIn.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+    });
     this.fetchCurrentMovies();
     this.fetchUpcomingMovies();
     

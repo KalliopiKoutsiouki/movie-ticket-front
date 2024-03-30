@@ -15,9 +15,7 @@ import { BehaviorSubject, map } from 'rxjs';
 export class UserService {
   private baseUrl = environment.backendBaseUrl;
   constructor(private http:HttpClient, private router: Router, private authService: AuthService) { }
-  private reservationsSubject = new BehaviorSubject<Reservation[]>([]);
-  reservations$: Observable<Reservation[]> = this.reservationsSubject.asObservable();
-
+  
   getAllUsers(): Observable<User[]> {
     const token = this.authService.getJwtToken();
     const headerOptions = {
@@ -57,21 +55,5 @@ export class UserService {
     
   }
 
-  getUserReservations(): Observable<Reservation[]> {
-    const token = this.authService.getJwtToken();
-    const headerOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-    };
-    const userName = localStorage.getItem('userName');
-    console.log(userName)
-    return this.http.get<Reservation[]>(`${this.baseUrl}/users/reservations/${userName}`, headerOptions).pipe(
-      map(reservations => {
-        this.reservationsSubject.next(reservations);
-        return reservations;
-      })
-    );
-  }
+ 
 }
