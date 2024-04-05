@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit{
   currentMovies: Movie[] = [];
   upcomingMovies: Movie[] = [];
   userReservations: Reservation[] = [];
+  userMovies: Movie[] = [];
  
 
   constructor(private movieService: MovieService, private authService: AuthService, private userService: UserService ){}

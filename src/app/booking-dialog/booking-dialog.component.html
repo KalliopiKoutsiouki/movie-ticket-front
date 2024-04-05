@@ -4,14 +4,10 @@
       <div class="col-12 col-md-6">
         <form class="text-center">
           <div *ngIf="!reservationConfirmed">
-            <mat-form-field>
-              <mat-label>Select number of seats</mat-label>
-            <input matInput type="number" [(ngModel)]="numberOfSeats" min="1" name="number-of-seats-field"  placeholder="Number of seats" class="form-control" required>
-          </mat-form-field>  
-
+           
           <mat-form-field class="date-picker-field">
             <mat-label>Pick a date</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date" class="date-picker-input" (dateChange)="onDateChange($event)" name="selectedDate" [(ngModel)]="selectedDate">
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" class="date-picker-input" (dateChange)="onDateChange($event)" name="selectedDate" [(ngModel)]="selectedDate" [matDatepickerFilter]="dateFilter">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -23,9 +19,18 @@
               <mat-radio-button *ngFor="let time of proposedTimes" [value]="time" class="custom-radio-button">{{ time.fromHour }} - {{ time.toHour }}</mat-radio-button>
             </mat-radio-group>
           </div>
+
+          <!-- Seat selection step -->
+          <div *ngIf="selectedDate && selectedTime && !reservationConfirmed">
+            <h4>Pick available number of seats</h4>
+            <mat-form-field >
+            <mat-label>Currently available up to: {{ selectedTime.currentCapacity }}</mat-label>
+          <input matInput type="number" [(ngModel)]="numberOfSeats" min="1" [max]="selectedTime.currentCapacity" name="number-of-seats-field"  placeholder="Number of seats" class="form-control" required>
+        </mat-form-field>  
+        </div>
           <div *ngIf="selectedTime">
             <button class="" (click)="confirmSelection()">Next</button>
-            <button class="" (click)="resetSelection()">Back</button>
+        
           </div>
         </div>
           <div *ngIf="reservationConfirmed">
@@ -48,7 +53,8 @@
           
             <div class="button-container">
               <button class="purple-button" (click)="finalConfirmation()">Confirm</button>
-              <button class="close-button" (click)="closeDialog()">Cancel</button>
+              <!-- <button class="close-button" (click)="closeDialog()">Cancel</button> -->
+              <button class="" (click)="resetSelection()">Back</button>
             </div>
           </div>
         

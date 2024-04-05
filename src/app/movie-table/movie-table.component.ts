@@ -17,7 +17,7 @@ export class MovieTableComponent implements OnInit {
   @Input() movies: any[] = [];
   @Input() type: 'currentMovies' | 'upcomingMovies';
   isLoggedIn: boolean = false;
-  disableButton: boolean = true;
+  disableButton: boolean = false;
 
   constructor( private authService: AuthService, private reservationService: ReservationService, public dialog: MatDialog){}
 

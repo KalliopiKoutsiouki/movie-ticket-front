@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environment';
 import { AuthService } from './auth.service';
 import { Observable} from 'rxjs';
-import { Hour } from '../model/hour';
+import { HallHour } from '../model/hallhour';
 
 
 @Injectable(
@@ -13,7 +13,7 @@ export class HallHourService {
     private baseUrl = environment.backendBaseUrl;
     constructor(private http:HttpClient, private authService: AuthService) { }
 
-getAllHoursByHallId(hallId:number) : Observable<Hour[]> {
+getAllHoursByHallId(hallId:number) : Observable<HallHour[]> {
     const token = this.authService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
@@ -21,7 +21,7 @@ getAllHoursByHallId(hallId:number) : Observable<Hour[]> {
         'Authorization': `Bearer ${token}`
       })
     };
-     return this.http.get<Hour[]>(`${this.baseUrl}/hall-hour/all/${hallId}`, headerOptions)    
+     return this.http.get<HallHour[]>(`${this.baseUrl}/hall-hour/all/${hallId}`, headerOptions)    
 }
 
 

@@ -10,6 +10,8 @@ import { User } from '../model/user';
 import { Observable, switchMap } from 'rxjs';
 import { ReservationService } from '../services/reservation.service';
 import { Output, EventEmitter } from '@angular/core';
+import { DateRange } from '../model/dateRange'
+import { HallHour } from '../model/hallhour';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -25,6 +27,7 @@ export class BookingDialogComponent implements OnInit {
   reservationConfirmed: boolean = false;
   userName: string = '';
   numberOfSeats: number = 1;
+  movieDateRange: DateRange;
  
   @Output() reservationConfirmedChange = new EventEmitter<Movie>();
 
@@ -40,25 +43,31 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.movie)
     this.userName = this.authService.getCurrentUser().username;
     this.fetchHours(this.movie.hall.id);
+    this.movieDateRange = this.movie.dateRange;
   }
 
   fetchHours(hallId: number): void {
     console.log(hallId)
     this.hallHourService.getAllHoursByHallId(hallId).subscribe(
-      (hours: Hour[]) => {
-        this.proposedTimes = hours.map(hour => ({
-          fromHour: hour.fromHour,
-          toHour: hour.toHour,
-          id: hour.id
+      (hallHours: HallHour[]) => {
+        this.proposedTimes = hallHours.map(hallHour => ({
+          fromHour: hallHour.hour.fromHour,
+          toHour: hallHour.hour.toHour,
+          id: hallHour.hour.id,
+          currentCapacity: hallHour.capacity
         })
         )
+        console.log("Proposed Times = " + this.proposedTimes)
       },
+      
       (error) => {
         console.error('Error fetching hours:', error);
       }
     );
+ 
   }
 
   onDateChange(event: any): void {
@@ -122,5 +131,18 @@ export class BookingDialogComponent implements OnInit {
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
+
+  // dateFilter = (d: Date | null): boolean => {
+  //   const date = d ? d.getTime() : 0;
+  //   return date >= this.movieDateRange.fromDate.getTime() && date <= this.movieDateRange.toDate.getTime();
+  // };
+
+  dateFilter = (d: Date | null): boolean => {
+    const currentDate = new Date();
+    const date = d ? d.getTime() : 0;
+    const fromDate = currentDate.getTime();
+    const toDate = new Date(this.movieDateRange.toDate).getTime();
+    return date >= fromDate && date <= toDate;
+};
 
 }
