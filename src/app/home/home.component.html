@@ -4,7 +4,10 @@
 <mat-tab-group centered  class="custom-tab-group">
 <mat-tab label="PLAYING NOW">
   <div class="">
-    <app-movie-table [movies]="currentMovies" type="currentMovies"></app-movie-table>
+    <app-movie-table 
+        [movies]="currentMovies" 
+        type="currentMovies">
+    </app-movie-table>
   </div>
 </mat-tab>
 <div *ngIf="isLoggedIn">

@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { Reservation } from '../model/reservation';
 import { UserService } from '../services/user.service';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -15,7 +16,6 @@ import { UserService } from '../services/user.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
-  // isLoggedIn$: Observable<boolean>;
   isLoggedIn: boolean = false;
   user: User;
   currentMovies: Movie[] = [];
@@ -30,10 +30,26 @@ export class HomeComponent implements OnInit{
     this.authService.isLoggedIn.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
     });
-    this.fetchCurrentMovies();
+    this.fetchCurrentMoviesWithAvailability();
     this.fetchUpcomingMovies();
-    
  };
+
+ private fetchCurrentMoviesWithAvailability(): void {
+  forkJoin({
+    currentMovies: this.fetchCurrentMovies(),
+    userMovies: this.fetchUserBookedMovies()
+  }).subscribe(
+    ({ currentMovies, userMovies }) => {
+      this.currentMovies = currentMovies;
+      this.userMovies = userMovies.movies;
+      this.updateCurrentMovies();
+    },
+    (error) => {
+      console.error('Error fetching data:', error);
+    }
+  );
+}
+
 
 //  getTokenIfFromGoogle(): void { 
 //   // if (!this.authService.isLoggedIn) {
@@ -67,16 +83,22 @@ export class HomeComponent implements OnInit{
 //     .subscribe();
 // }
 
-fetchCurrentMovies() : void {
-  this.movieService.fetchCurrentMovies()
-  .pipe(
-    tap((movies: Movie[]) => {
-      this.currentMovies = movies;
-    }),
-    
-  )
-  .subscribe();
+
+private updateCurrentMovies(): void {
+  this.currentMovies.forEach(movie => {
+    const isBooked = this.userMovies.some(bookedMovie => bookedMovie.id === movie.id);
+    movie.bookedForUser = isBooked;
+  });
 }
+
+private fetchCurrentMovies() {
+  return this.movieService.fetchCurrentMovies();
+}
+
+private fetchUserBookedMovies() {
+  return this.userService.getUserByUserName(localStorage.getItem("userName"));
+}
+
 
 fetchUpcomingMovies() : void {
   this.movieService.fetchUpcomingMovies()
@@ -84,10 +106,8 @@ fetchUpcomingMovies() : void {
     tap((movies: Movie[]) => {
       this.upcomingMovies = movies;
     }),
-    
   )
   .subscribe();
 }
-
 
 }

@@ -5,6 +5,7 @@ import { Hour } from '../model/hour';
 import { Movie } from '../model/movie';
 import { ReservationService } from '../services/reservation.service';
 import { tap, Subscription } from 'rxjs';
+import { BookingDialogComponent } from '../booking-dialog/booking-dialog.component';
 
 @Component({
   selector: 'app-reservation-table',
@@ -30,7 +31,13 @@ export class ReservationTableComponent implements OnInit{
   }
 
   editReservation(reservation: Reservation): void {
+    const dialogRef = this.dialog.open(BookingDialogComponent, {
+      data: { reservation: reservation }
+    });
 
+    dialogRef.componentInstance.reservationConfirmedChange.subscribe((movie: Movie) => {
+      this.fetchUserReservations();
+    });
   }
 
   deleteReservation(reservationId: number): void {

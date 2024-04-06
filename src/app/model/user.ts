@@ -1,3 +1,5 @@
+import { Movie } from "./movie";
+
 export interface User {
     id?: number;
     userName: string;
@@ -6,6 +8,6 @@ export interface User {
     lastName?: string;
     email: string;
     userRoles?: string[];
-    movies?: any[]; 
+    movies?: Movie[]; 
     reservation?: any;
   }

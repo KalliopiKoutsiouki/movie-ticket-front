@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Injector } from '@angular/core';
+import { Component, OnInit, Inject, Input  } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Movie } from '../model/movie';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -20,6 +20,7 @@ import { HallHour } from '../model/hallhour';
 })
 export class BookingDialogComponent implements OnInit {
 
+  @Input() reservation: Reservation;
   movie: Movie = null;
   selectedDate: Date | null = null;
   selectedTime: Hour | null = null;
@@ -43,14 +44,17 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.movie)
+    if (this.reservation) {  // Check if reservation exists for editing
+      this.selectedDate = new Date(this.reservation.selectedDate);
+      this.selectedTime = this.reservation.hour;
+      this.numberOfSeats = this.reservation.numberOfSeats;
+    }
     this.userName = this.authService.getCurrentUser().username;
     this.fetchHours(this.movie.hall.id);
     this.movieDateRange = this.movie.dateRange;
   }
 
   fetchHours(hallId: number): void {
-    console.log(hallId)
     this.hallHourService.getAllHoursByHallId(hallId).subscribe(
       (hallHours: HallHour[]) => {
         this.proposedTimes = hallHours.map(hallHour => ({
@@ -62,23 +66,17 @@ export class BookingDialogComponent implements OnInit {
         )
         console.log("Proposed Times = " + this.proposedTimes)
       },
-      
       (error) => {
         console.error('Error fetching hours:', error);
       }
     );
- 
   }
 
   onDateChange(event: any): void {
     this.selectedDate = event.value;
   }
 
-
   confirmSelection(): void {
-    console.log('Selected date:', this.selectedDate);
-    console.log('Selected time:', this.selectedTime);
-    console.log('Selected number of seats:', this.numberOfSeats)
     this.reservationConfirmed = true;
   }
 
@@ -90,6 +88,17 @@ export class BookingDialogComponent implements OnInit {
   }
 
   finalConfirmation(): void {
+    if (this.reservation) {  // Update reservation if exists
+      this.updateReservation().subscribe(
+        (response) => {
+          console.log('Reservation updated:', response);
+          this.reservationConfirmedChange.emit(this.movie); 
+        },
+        (error) => {
+          console.error('Error updating reservation:', error);
+        }
+      );
+    } else {
     this.createReservation().subscribe(
       (response) => {
         console.log('Reservation created:', response);
@@ -101,6 +110,21 @@ export class BookingDialogComponent implements OnInit {
     );
     this.dialogRef.close();
   }
+}
+
+updateReservation(): Observable<Reservation> {
+  const formattedDate = this.formatDate(this.selectedDate);
+  const updatedReservation: Reservation = {
+    ...this.reservation,
+    user: this.reservation.user,
+    numberOfSeats: this.numberOfSeats,
+    movie: this.movie,
+    hour: this.selectedTime,
+    selectedDate: formattedDate,
+    timestamp: new Date()
+  };
+  return this.reservationService.createReservation(updatedReservation);
+}
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -131,11 +155,6 @@ export class BookingDialogComponent implements OnInit {
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
-
-  // dateFilter = (d: Date | null): boolean => {
-  //   const date = d ? d.getTime() : 0;
-  //   return date >= this.movieDateRange.fromDate.getTime() && date <= this.movieDateRange.toDate.getTime();
-  // };
 
   dateFilter = (d: Date | null): boolean => {
     const currentDate = new Date();
