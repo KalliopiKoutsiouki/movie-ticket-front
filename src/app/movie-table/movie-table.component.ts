@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BookingDialogComponent } from '../booking-dialog/booking-dialog.component';
 import { Movie } from '../model/movie';
-
+import { Subscription } from 'rxjs';
 import { ReservationService } from '../services/reservation.service';
 
 @Component({
@@ -18,14 +18,32 @@ export class MovieTableComponent implements OnInit {
   @Input() type: 'currentMovies' | 'upcomingMovies';
   isLoggedIn: boolean = false;
   disableButton: boolean = false;
-
-  constructor( private authService: AuthService, private reservationService: ReservationService, public dialog: MatDialog){}
+  private reservationDeletedSubscription: Subscription;
+  constructor( private authService: AuthService, public dialog: MatDialog, private reservationService: ReservationService){}
 
   ngOnInit(): void {
     this.authService.isLoggedIn.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
     });
-}
+
+    // this.reservationDeletedSubscription = this.reservationTableComponent.reservationDeleted.subscribe(
+    //   deletedMovie => {
+    //     const index = this.movies.findIndex(m => m.id === deletedMovie.id);
+    //     if (index !== -1) {
+    //       this.movies[index].isBooked = false;
+    //     }
+    //   }
+    // );
+    this.reservationDeletedSubscription = this.reservationService.reservationDeleted$.subscribe(
+      deletedMovie => {
+        const index = this.movies.findIndex(m => m.id === deletedMovie.id);
+        console.log("inside subscription")
+        if (index !== -1) {
+          this.movies[index].bookedForUser = false; // Update isBooked property
+        }
+      }
+    );
+  }
 
   openModal(movie:Movie): void {
     const dialogRef = this.dialog.open(BookingDialogComponent, {

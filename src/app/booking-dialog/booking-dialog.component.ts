@@ -20,15 +20,17 @@ import { HallHour } from '../model/hallhour';
 })
 export class BookingDialogComponent implements OnInit {
 
-  @Input() reservation: Reservation;
+  // @Input() reservation: Reservation;
   movie: Movie = null;
   selectedDate: Date | null = null;
   selectedTime: Hour | null = null;
+  selectedTimeId: number | null = null;
   proposedTimes: Hour[] = null
   reservationConfirmed: boolean = false;
   userName: string = '';
   numberOfSeats: number = 1;
   movieDateRange: DateRange;
+  reservation: Reservation;
  
   @Output() reservationConfirmedChange = new EventEmitter<Movie>();
 
@@ -37,17 +39,24 @@ export class BookingDialogComponent implements OnInit {
     private hallHourService: HallHourService,
     private userService: UserService,
     private reservationService: ReservationService,
-    @Inject(MAT_DIALOG_DATA) public data: { movie: Movie },
+    @Inject(MAT_DIALOG_DATA) public data: { movie: Movie, reservation: Reservation },
     public dialogRef: MatDialogRef<BookingDialogComponent>
   ) {
     this.movie = data.movie;
+    this.reservation = data.reservation;
   }
 
   ngOnInit(): void {
-    if (this.reservation) {  // Check if reservation exists for editing
+    if (this.reservation) {  
+      this.movie = this.reservation.movie;
+      const hallId = this.reservation.movie.hall.id;
+      console.log(this.reservation)
       this.selectedDate = new Date(this.reservation.selectedDate);
       this.selectedTime = this.reservation.hour;
+      this.selectedTimeId = this.selectedTime.id;
+      this.updateCapacity(hallId);
       this.numberOfSeats = this.reservation.numberOfSeats;
+      console.log(this.selectedTime)
     }
     this.userName = this.authService.getCurrentUser().username;
     this.fetchHours(this.movie.hall.id);
@@ -55,6 +64,7 @@ export class BookingDialogComponent implements OnInit {
   }
 
   fetchHours(hallId: number): void {
+    console.log("inside fetch hours hallid:" + hallId)
     this.hallHourService.getAllHoursByHallId(hallId).subscribe(
       (hallHours: HallHour[]) => {
         this.proposedTimes = hallHours.map(hallHour => ({
@@ -64,7 +74,6 @@ export class BookingDialogComponent implements OnInit {
           currentCapacity: hallHour.capacity
         })
         )
-        console.log("Proposed Times = " + this.proposedTimes)
       },
       (error) => {
         console.error('Error fetching hours:', error);
@@ -72,17 +81,36 @@ export class BookingDialogComponent implements OnInit {
     );
   }
 
+  updateCapacity(hallId: number): void {
+    this.hallHourService.getAllHoursByHallId(hallId).subscribe(
+      (hallHours: HallHour[]) => {
+        const hallHour = hallHours.find(hallHour => hallHour.hour.id === this.selectedTimeId)
+        this.selectedTime.currentCapacity = hallHour.capacity;
+      },
+      (error) => {
+        console.error('Error configuring capacity:', error);
+      }
+    );
+  }
+
   onDateChange(event: any): void {
     this.selectedDate = event.value;
+   
   }
 
   confirmSelection(): void {
     this.reservationConfirmed = true;
   }
 
+  onTimeChange(selectedTimeId: number) {
+    this.selectedTime = this.proposedTimes.find(time => time.id === selectedTimeId);
+   
+  }
+
   resetSelection(): void {
     this.selectedDate = null;
     this.selectedTime = null;
+    this.selectedTimeId = null;
     this.numberOfSeats = 0;
     this.reservationConfirmed = false;
   }
@@ -108,8 +136,9 @@ export class BookingDialogComponent implements OnInit {
         console.error('Error creating reservation:', error);
       }
     );
-    this.dialogRef.close();
+   
   }
+  this.dialogRef.close();
 }
 
 updateReservation(): Observable<Reservation> {
@@ -123,7 +152,7 @@ updateReservation(): Observable<Reservation> {
     selectedDate: formattedDate,
     timestamp: new Date()
   };
-  return this.reservationService.createReservation(updatedReservation);
+  return this.reservationService.updateReservation(updatedReservation);
 }
 
   closeDialog(): void {

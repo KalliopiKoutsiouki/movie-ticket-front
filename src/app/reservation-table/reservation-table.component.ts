@@ -6,6 +6,7 @@ import { Movie } from '../model/movie';
 import { ReservationService } from '../services/reservation.service';
 import { tap, Subscription } from 'rxjs';
 import { BookingDialogComponent } from '../booking-dialog/booking-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-reservation-table',
@@ -16,6 +17,7 @@ export class ReservationTableComponent implements OnInit{
 
   reservations: Reservation[] = [];
   private reservationsSubscription: Subscription;
+  // @Output() reservationDeleted = new EventEmitter<Movie>();
 
   constructor(
     private reservationService: ReservationService,
@@ -31,6 +33,7 @@ export class ReservationTableComponent implements OnInit{
   }
 
   editReservation(reservation: Reservation): void {
+    console.log(reservation)
     const dialogRef = this.dialog.open(BookingDialogComponent, {
       data: { reservation: reservation }
     });
@@ -40,14 +43,32 @@ export class ReservationTableComponent implements OnInit{
     });
   }
 
-  deleteReservation(reservationId: number): void {
- 
+  deleteReservation(reservation: Reservation): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.reservationService.deleteReservation(reservation).subscribe(
+          () => {
+            console.log('Reservation deleted successfully');
+            this.fetchUserReservations();
+            // this.reservationDeleted.emit(reservation.movie); 
+          },
+          error => {
+            console.error('Error deleting reservation:', error);
+          }
+        );
+      }
+    });
+    
   }
 
   fetchUserReservations() : void {
     this.reservationsSubscription = this.reservationService.reservations$.subscribe(
       reservations => {
         this.reservations = reservations;
+      },
+      error => {
+        console.error('Error fetching user reservations:', error);
       }
     );
     this.reservationService.getUserReservations()
@@ -57,6 +78,7 @@ export class ReservationTableComponent implements OnInit{
       })
     )
     .subscribe();
+    // this.reservationService.getUserReservations().subscribe();
   }
 
 }

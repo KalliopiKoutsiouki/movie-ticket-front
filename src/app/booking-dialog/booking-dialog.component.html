@@ -15,13 +15,13 @@
           <!-- Time selection step -->
           <div *ngIf="selectedDate && !reservationConfirmed">
             <h4>Pick available time</h4>
-            <mat-radio-group [(ngModel)]="selectedTime"  name="selectedTime" class="custom-radio-group">
-              <mat-radio-button *ngFor="let time of proposedTimes" [value]="time" class="custom-radio-button">{{ time.fromHour }} - {{ time.toHour }}</mat-radio-button>
+            <mat-radio-group [(ngModel)]="selectedTimeId" (ngModelChange)="onTimeChange($event)" name="selectedTime" class="custom-radio-group">
+              <mat-radio-button *ngFor="let time of proposedTimes" [value]="time.id" class="custom-radio-button">{{ time.fromHour }} - {{ time.toHour }}</mat-radio-button>
             </mat-radio-group>
           </div>
 
           <!-- Seat selection step -->
-          <div *ngIf="selectedDate && selectedTime && !reservationConfirmed">
+          <div *ngIf="selectedDate && selectedTimeId && !reservationConfirmed">
             <h4>Pick available number of seats</h4>
             <mat-form-field >
             <mat-label>Currently available up to: {{ selectedTime.currentCapacity }}</mat-label>

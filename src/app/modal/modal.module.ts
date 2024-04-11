@@ -9,9 +9,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { BookingDialogComponent } from '../booking-dialog/booking-dialog.component';
-
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 @NgModule({
-  declarations: [BookingDialogComponent],
+  declarations: [BookingDialogComponent, ConfirmationDialogComponent],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -21,12 +21,14 @@ import { BookingDialogComponent } from '../booking-dialog/booking-dialog.compone
     MatCheckboxModule,
     MatRadioModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    
   ],
   exports: [
     BookingDialogComponent,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    ConfirmationDialogComponent
   ]
 })
 export class ModalModule { }

@@ -23,6 +23,7 @@ import { ModalModule } from './modal/modal.module';
 import { MatNativeDateModule, DateAdapter , MAT_DATE_LOCALE } from '@angular/material/core';
 import { ReservationTableComponent } from './reservation-table/reservation-table.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,7 @@ import { ReservationTableComponent } from './reservation-table/reservation-table
     NavigationBarComponent,
     OAuthCallbackComponentComponent,
     RegistrationComponent,
-    ReservationTableComponent,
+    ReservationTableComponent
     
   ],
   imports: [
