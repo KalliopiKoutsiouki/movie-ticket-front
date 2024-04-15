@@ -84,7 +84,7 @@ export class HallAdminService {
       );
   }
 
-  getDateRangesByHall(id: number): Observable<DateRange> {
+  getDateRangesByHall(id: number): Observable<DateRange[]> {
     const token = this.authService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
@@ -92,11 +92,12 @@ export class HallAdminService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<DateRange>(`${this.baseUrl}/hall/dateRanges/${id}`, headerOptions)
+    return this.http.get<DateRange[]>(`${this.baseUrl}/hall/dateRanges/${id}`, headerOptions)
       .pipe(
         catchError(this.handleError)
       );
-  }
+}
+
 
   private handleError(error: any) {
     console.error('An error occurred', error);

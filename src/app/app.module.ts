@@ -29,6 +29,7 @@ import { HallAdminComponent } from './hall-admin/hall-admin.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AddHallComponent } from './add-hall/add-hall.component';
 import { EditHallComponent } from './edit-hall/edit-hall.component';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { EditHallComponent } from './edit-hall/edit-hall.component';
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatInputModule
   ],
   providers: [AuthService, UserService, MovieService,  { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, provideAnimationsAsync()
   ],

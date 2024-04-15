@@ -1,19 +1,24 @@
-<mat-dialog-content>
-  <mat-form-field>
-    <input matInput placeholder="New Hall Name" [(ngModel)]="newHallName">
-  </mat-form-field>
-  <mat-form-field class="date-picker-input">
-    <input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" [(ngModel)]="startDate">
-    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #startDatePicker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [matDatepicker]="endDatePicker" placeholder="End Date" [(ngModel)]="endDate">
-    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #endDatePicker></mat-datepicker>
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="updateHall()">Update</button>
-  <button mat-button (click)="closeDialog()">Cancel</button>
-</mat-dialog-actions>
+<h2>Edit Hall</h2>
+
+<label for="hallName">Hall Name:</label>
+<input id="hallName" type="text" [(ngModel)]="newHallName" placeholder="Enter hall name">
+
+<label for="startDatePicker">Start Date:</label>
+
+<mat-form-field appearance="fill">
+  <input matInput id="startDatePicker" [matDatepicker]="startDatePicker" [(ngModel)]="selectedStartDate" (dateChange)="startDateChanged($event)">
+  <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+  <mat-datepicker [startAt]="startDatePicker" #startDatePicker></mat-datepicker>
+</mat-form-field>
+
+<label for="endDatePicker">End Date:</label>
+<mat-form-field>
+  <input id="endDatePicker" matInput [matDatepicker]="endDatePicker" [(ngModel)]="selectedEndDate" (dateChange)="endDateChanged($event)">
+  <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+  <mat-datepicker [startAt]="endDatePicker" #endDatePicker></mat-datepicker>
+</mat-form-field>
+
+<div>
+  <button mat-button color="primary" (click)="updateHall()">Save Changes</button>
+  <button mat-button color="warn" (click)="closeDialog()">Close</button>
+</div>

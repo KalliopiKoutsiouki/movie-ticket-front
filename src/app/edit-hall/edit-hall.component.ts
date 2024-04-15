@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Hall } from '../model/hall';
-import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HallAdminService } from '../services/hall-admin.service';
+import { DateRange } from '../model/dateRange';
 
 @Component({
   selector: 'app-edit-hall',
@@ -12,6 +13,9 @@ import { HallAdminService } from '../services/hall-admin.service';
 export class EditHallComponent implements OnInit {
   hall: Hall;
   newHallName: string;
+  dateRange: DateRange | null;
+  selectedStartDate: Date;
+  selectedEndDate: Date | null = null;
   startDate: Date;
   endDate: Date;
 
@@ -26,7 +30,7 @@ export class EditHallComponent implements OnInit {
   ngOnInit(): void {
     this.newHallName = this.data.hall.name;
     this.hall = this.data.hall;
-    fetchDateRange(this.data.hall.id);
+    this.fetchDateRange(this.data.hall.id);
   }
 
   updateHall(): void {
@@ -53,8 +57,13 @@ export class EditHallComponent implements OnInit {
   closeDialog(): void {
     this.dialogRef.close();
   }
-}
 
-function fetchDateRange(id: number) {
-  this.hallService.getDateRangesByHall(id);//TODO:continue
+  fetchDateRange(id: number): void {
+    this.hallService.getDateRangesByHall(id).subscribe(dateRange => {
+      this.dateRange = dateRange[0];
+      this.selectedStartDate = new Date(dateRange[0].fromDate);
+      this.selectedEndDate = new Date(dateRange[0].toDate);
+      console.log(this.selectedStartDate);
+    });
+  }
 }
