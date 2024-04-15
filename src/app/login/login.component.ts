@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService} from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,19 +11,23 @@ export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
   url: string = "";
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router:Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     // this.authService.loginUrlForGoogle().subscribe((data:any) =>{
     //   this.url = data.url;
     // })
+    this.authService.errorMessageSubject.subscribe(errorMessage => {
+      this.errorMessage = '*' + errorMessage;
+    });
   }
 
   login() {
-    // Call your authentication service to handle login with username and password
     this.authService.login(this.username, this.password);
   }
+
 
   register() {
     this.router.navigate(['/register']);

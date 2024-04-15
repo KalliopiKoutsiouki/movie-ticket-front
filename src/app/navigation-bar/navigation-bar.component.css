@@ -4,9 +4,9 @@
   }
 
   mat-toolbar {
-    background-color: #000000; /* Black background */
-    color: white; /* Text color */
-    border-bottom: 1px solid rgb(255, 255, 255); /* Add this line to add a black line at the bottom */
+    background-color: #000000; 
+    color: white; 
+    border-bottom: 1px solid rgb(255, 255, 255); 
   }
 
   .button-nav {
@@ -38,7 +38,7 @@
 .dropdown-content {
   visibility: hidden;
   position: absolute;
-  top: 100%; /* Position the dropdown below the button */
+  top: 100%; 
   left: 0;
   z-index: 1;
   background-color: #000000;

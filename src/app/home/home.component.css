@@ -5,12 +5,12 @@
   
   .welcome-text {
     font-family: 'Bebas Neue', sans-serif;
-    color: #102829; /* or any other color you prefer */
+    color: #102829; 
   }
 
   .image-container {
     display: flex;
-    height: 150px; /* Adjust the height as per your requirement */
+    height: 150px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
@@ -21,7 +21,7 @@
   .image-item {
     height: 80%;
     width: 100%;
-    margin-right: 10px; /* Adjust the spacing between images */
+    margin-right: 10px; 
     margin-left:10px;
   }
  

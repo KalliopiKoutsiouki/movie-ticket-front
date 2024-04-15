@@ -1,31 +1,33 @@
 <div class="table-container">
-  
-    <table class="table table-striped">
-     <thead>
-        <tr >
-        </tr>
-      </thead> 
-      <tbody>
-        <tr *ngFor="let movie of movies">
-          <td style="width: 150px;">
-            <img [src]="movie.picture" alt="{{ movie.name }}" class="movie-picture">
-          </td>
-          <td>
-            <div class="movie-details">
-              <div class="movie-name">{{ movie.name }}</div>
-              <hr class="rounded">
-              <div class="description font-weight-light" >
-                {{movie.description}}
-              </div>
-              <div *ngIf="type === 'currentMovies' && (isLoggedIn)">
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let movie of movies">
+        <td style="width: 150px;">
+          <img [src]="movie.picture" alt="{{ movie.name }}" class="movie-picture">
+        </td>
+        <td>
+          <div class="movie-details">
+            <div class="movie-name">{{ movie.name }}</div>
+            <hr class="rounded">
+            <div class="description font-weight-light">
+              {{movie.description}}
+            </div>
+            <div *ngIf="type === 'currentMovies' && (isLoggedIn)">
               <div class="hall-details"> {{movie.hall.name}}</div>
-              <button [disabled]="movie.bookedForUser"  [ngClass]="{'disabled-button': movie.bookedForUser}"    class="outlined-button" (click)="openModal(movie)"> {{ movie.bookedForUser ? 'Booked' : 'Book' }}</button>
+              <button [disabled]="movie.bookedForUser" [ngClass]="{'disabled-button': movie.bookedForUser}"
+                class="outlined-button" (click)="openModal(movie)"> {{ movie.bookedForUser ? 'Booked' : 'Book'
+                }}</button>
             </div>
-              <div>
-              </div>
+            <div>
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

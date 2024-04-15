@@ -1,27 +1,53 @@
 <div class="container">
-    <div class="row" style="text-align: center; margin-top: 20px;">
-      <div class="col-12 col-md-6">
-        <img src="https://banner2.cleanpng.com/20180323/ape/kisspng-art-film-logo-cinema-clip-art-movie-logo-cliparts-5ab587fb1000c4.1651552415218462670656.jpg" alt="Movie Theatre Ticket Logo" height="40" style="margin-right: 16px; display: inline-block; vertical-align: middle;">
-        <h2 class="title-dark-teal" style="display: inline-block; vertical-align: middle;">Movies & Chill</h2>
-      </div>
+  <div class="row" style="text-align: center; margin-top: 20px;">
+    <div class="col-12 col-md-6">
+      <img
+        src="https://banner2.cleanpng.com/20180323/ape/kisspng-art-film-logo-cinema-clip-art-movie-logo-cliparts-5ab587fb1000c4.1651552415218462670656.jpg"
+        alt="Movie Theatre Ticket Logo" height="40"
+        style="margin-right: 16px; display: inline-block; vertical-align: middle;">
+      <h2 class="title-dark-teal" style="display: inline-block; vertical-align: middle;">Movies & Chill</h2>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-6">
-        <form (ngSubmit)="register()" class="text-center">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" [(ngModel)]="username" name="username" id="username" class="form-control" required>
+  </div>
+  <div class="row justify-content-center">
+
+    <div class="col-12 col-md-6">
+      <p class="text-danger"> {{ errorMessage }} </p>
+      <form (ngSubmit)="register()" [formGroup]="registrationForm" class="text-center">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" [(ngModel)]="username" formControlName="username" name="username" id="username"
+            class="form-control" required>
+          <div
+            *ngIf="registrationForm.get('username').invalid && (registrationForm.get('username').dirty || registrationForm.get('username').touched)"
+            class="text-danger">
+            <div *ngIf="registrationForm.get('username').hasError('required')">* Username is required.</div>
+            <div *ngIf="registrationForm.get('username').hasError('minlength')">* Minimum length : 8.</div>
           </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" [(ngModel)]="email" name="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" formControlName="email" [(ngModel)]="email" name="email" id="email" class="form-control"
+            required>
+          <div
+            *ngIf="registrationForm.get('email').invalid && (registrationForm.get('email').dirty || registrationForm.get('email').touched)"
+            class="text-danger">
+            <div *ngIf="registrationForm.get('email').hasError('required')">* Email is required.</div>
+            <div *ngIf="registrationForm.get('email').hasError('email')">* Invalid email format.</div>
           </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" [(ngModel)]="password" name="password" id="password" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" [(ngModel)]="password" formControlName="password" name="password" id="password"
+            class="form-control" required>
+          <div
+            *ngIf="registrationForm.get('password').invalid && (registrationForm.get('password').dirty || registrationForm.get('password').touched)"
+            class="text-danger">
+            <div *ngIf="registrationForm.get('password').hasError('required')">* Password is required.</div>
+            <div *ngIf="registrationForm.get('password').hasError('minlength')">* Minimum length : 8.</div>
           </div>
-          <button type="submit" class="btn btn-primary mb-3 button-font">Register</button>
-        </form>
-      </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3 button-font">Register</button>
+      </form>
     </div>
+  </div>
 </div>

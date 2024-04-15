@@ -8,8 +8,8 @@ import { UserService } from '../services/user.service';
   templateUrl: './navigation-bar.component.html',
   styleUrl: './navigation-bar.component.css'
 })
-export class NavigationBarComponent implements OnInit{
-  user:any = null;
+export class NavigationBarComponent implements OnInit {
+  user: any = null;
   isLoggedIn: boolean = false;
   constructor(private router: Router, private authService: AuthService, private userService: UserService) { }
   isDropdownOpen: boolean = false;
@@ -31,7 +31,7 @@ export class NavigationBarComponent implements OnInit{
     this.router.navigate(['/login']);
   }
 
-  login () {
+  login() {
     this.router.navigate(['/login']);
   }
 

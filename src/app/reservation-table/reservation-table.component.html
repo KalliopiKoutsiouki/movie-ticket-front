@@ -6,12 +6,13 @@
                 <th>HOUR</th>
                 <th>DATE</th>
                 <th>SEATS</th>
-                <th>ACTIONS</th>
+                <th>CHANGE</th>
+                <th>TICKET</th>
             </tr>
         </thead>
-       
+
         <tbody>
-           
+
             <tr *ngFor="let reservation of reservations">
                 <td>{{ reservation.movie.name }}</td>
                 <td>{{ reservation.hour.fromHour }} - {{ reservation.hour.toHour }}</td>
@@ -22,7 +23,14 @@
                         <mat-icon class="material-icons-outlined">edit</mat-icon>
                     </button>
                     <button mat-icon-button color="" (click)="deleteReservation(reservation)">
-                        <mat-icon color="black" aria-hidden="false" aria-label="Outlined delete icon">delete_outline</mat-icon>
+                        <mat-icon color="black" aria-hidden="false"
+                            aria-label="Outlined delete icon">delete_outline</mat-icon>
+                    </button>
+
+                </td>
+                <td>
+                    <button mat-icon-button color="primary" (click)="downloadTicket(reservation)">
+                        <mat-icon class="material-icons-outlined">download</mat-icon>
                     </button>
                 </td>
             </tr>
@@ -34,4 +42,3 @@
         </div>
     </ng-template>
 </div>
-

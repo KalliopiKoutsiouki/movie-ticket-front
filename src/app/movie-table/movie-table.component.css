@@ -1,16 +1,14 @@
 .table {
     width: 100%; 
-    margin: 0 auto; /* Center the table horizontally */
+    margin: 0 auto; 
   }
   
   .table td:nth-child(2) {
-    /* max-width: 200px; Fixed width for the second column */
-    overflow: hidden; /* Hide overflow content */
-    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
-    white-space: nowrap; /* Prevent text wrapping in the second column */
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
 }
   .table th {
-    /* background-color:; */
     color: grey;
   }
 
@@ -18,63 +16,43 @@
     max-width: 60vw;
     margin: 50px auto;
     padding: 20px;
-    background-color: #fff; /* White */
+    background-color: #fff; 
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   }
  
-/* 
-  .table-btn {
-   width: auto;   
-   display: inline-block;
-    padding: 10px;
-    background-color: #3e822d;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    padding: 7px;
-  }
-
-  .table-btn:hover {
-    background-color: #2e6622; 
-  } */
-
 
   .movie-picture {
-    max-width: 100px; /* Limit the width of the picture */
+    max-width: 100px; 
 }
 
 .movie-name {
-    font-weight: bold; /* Make the movie name bold */
+    font-weight: bold; 
 }
 
 
 .description {
-    margin-top: 10px; /* Add margin between name and description */
+    margin-top: 10px; 
     font-style: oblique;
     word-wrap: break-word;
-    white-space: pre-wrap; /* To preserve white spaces */
+    white-space: pre-wrap; 
     
       
   }
 
   .hall-details {
-    margin-top: 10px; /* Add margin between name and description */
+    margin-top: 10px; 
     color: #909090;
   }
 
 
 th {
-  font-size: 20px; /* Adjust the font size as needed */
-  margin: 30px; /* Adjust the margin as needed */
+  font-size: 20px;
+  margin: 30px;
   padding: 15px;
 }
 
 td {
-  /* margin-bottom:50px; */
   padding: 30px;
 }
 

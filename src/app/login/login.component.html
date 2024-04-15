@@ -1,4 +1,4 @@
- <!-- <div class="container">
+<!-- <div class="container">
   <div class="d-flex flex-column align-items-center justify-content-center">
   <div class="d-flex align-items-center mb-4">
   <img src="https://banner2.cleanpng.com/20180323/ape/kisspng-art-film-logo-cinema-clip-art-movie-logo-cliparts-5ab587fb1000c4.1651552415218462670656.jpg" alt="Movie Theatre Ticket Logo" height="40" style="margin-right: 16px;">
@@ -20,30 +20,34 @@
   </div>
   </div> -->
 
-  <div class="container">
-    <div class="row" style="text-align: center; margin-top: 20px;">
-      <div class="col-12 col-md-6">
-        <img src="https://banner2.cleanpng.com/20180323/ape/kisspng-art-film-logo-cinema-clip-art-movie-logo-cliparts-5ab587fb1000c4.1651552415218462670656.jpg" alt="Movie Theatre Ticket Logo" height="40" style="margin-right: 16px; display: inline-block; vertical-align: middle;">
-        <h2 class="title-dark-teal" style="display: inline-block; vertical-align: middle;">Movies & Chill</h2>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-6">
-        <form (ngSubmit)="login()" class="text-center">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" [(ngModel)]="username" name="username" id="username" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" [(ngModel)]="password" name="password" id="password" class="form-control" required>
-          </div>
-          <button type="submit" class="btn btn-primary mb-3 button-font">Login</button>
-          <button class="btn btn-secondary">
-            <a href="{{url}}" class="white-text button-font">Login with Google</a>
-          </button>
-          <button  class="btn btn-primary mb-3 button-font" (click)="register()">Register</button>
-        </form>
-      </div>
+<div class="container">
+  <div class="row" style="text-align: center; margin-top: 20px;">
+    <div class="col-12 col-md-6">
+      <img
+        src="https://banner2.cleanpng.com/20180323/ape/kisspng-art-film-logo-cinema-clip-art-movie-logo-cliparts-5ab587fb1000c4.1651552415218462670656.jpg"
+        alt="Movie Theatre Ticket Logo" height="40"
+        style="margin-right: 16px; display: inline-block; vertical-align: middle;">
+      <h2 class="title-dark-teal" style="display: inline-block; vertical-align: middle;">Movies & Chill</h2>
     </div>
   </div>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6">
+      <p class="error-message"> {{ errorMessage }} </p>
+      <form (ngSubmit)="login()" class="text-center">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" [(ngModel)]="username" name="username" id="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" [(ngModel)]="password" name="password" id="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3 button-font">Login</button>
+        <button class="btn btn-secondary">
+          <a href="{{url}}" class="white-text button-font">Login with Google</a>
+        </button>
+        <button class="btn btn-primary mb-3 button-font" (click)="register()">Register</button>
+      </form>
+    </div>
+  </div>
+</div>

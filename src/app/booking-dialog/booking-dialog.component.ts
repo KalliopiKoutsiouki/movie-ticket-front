@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input  } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Movie } from '../model/movie';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -20,7 +20,6 @@ import { HallHour } from '../model/hallhour';
 })
 export class BookingDialogComponent implements OnInit {
 
-  // @Input() reservation: Reservation;
   movie: Movie = null;
   selectedDate: Date | null = null;
   selectedTime: Hour | null = null;
@@ -31,7 +30,7 @@ export class BookingDialogComponent implements OnInit {
   numberOfSeats: number = 1;
   movieDateRange: DateRange;
   reservation: Reservation;
- 
+
   @Output() reservationConfirmedChange = new EventEmitter<Movie>();
 
   constructor(
@@ -47,7 +46,7 @@ export class BookingDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.reservation) {  
+    if (this.reservation) {
       this.movie = this.reservation.movie;
       const hallId = this.reservation.movie.hall.id;
       console.log(this.reservation)
@@ -95,7 +94,7 @@ export class BookingDialogComponent implements OnInit {
 
   onDateChange(event: any): void {
     this.selectedDate = event.value;
-   
+
   }
 
   confirmSelection(): void {
@@ -104,7 +103,7 @@ export class BookingDialogComponent implements OnInit {
 
   onTimeChange(selectedTimeId: number) {
     this.selectedTime = this.proposedTimes.find(time => time.id === selectedTimeId);
-   
+
   }
 
   resetSelection(): void {
@@ -120,40 +119,40 @@ export class BookingDialogComponent implements OnInit {
       this.updateReservation().subscribe(
         (response) => {
           console.log('Reservation updated:', response);
-          this.reservationConfirmedChange.emit(this.movie); 
+          this.reservationConfirmedChange.emit(this.movie);
         },
         (error) => {
           console.error('Error updating reservation:', error);
         }
       );
     } else {
-    this.createReservation().subscribe(
-      (response) => {
-        console.log('Reservation created:', response);
-        this.reservationConfirmedChange.emit(this.movie); 
-      },
-      (error) => {
-        console.error('Error creating reservation:', error);
-      }
-    );
-   
-  }
-  this.dialogRef.close();
-}
+      this.createReservation().subscribe(
+        (response) => {
+          console.log('Reservation created:', response);
+          this.reservationConfirmedChange.emit(this.movie);
+        },
+        (error) => {
+          console.error('Error creating reservation:', error);
+        }
+      );
 
-updateReservation(): Observable<Reservation> {
-  const formattedDate = this.formatDate(this.selectedDate);
-  const updatedReservation: Reservation = {
-    ...this.reservation,
-    user: this.reservation.user,
-    numberOfSeats: this.numberOfSeats,
-    movie: this.movie,
-    hour: this.selectedTime,
-    selectedDate: formattedDate,
-    timestamp: new Date()
-  };
-  return this.reservationService.updateReservation(updatedReservation);
-}
+    }
+    this.dialogRef.close();
+  }
+
+  updateReservation(): Observable<Reservation> {
+    const formattedDate = this.formatDate(this.selectedDate);
+    const updatedReservation: Reservation = {
+      ...this.reservation,
+      user: this.reservation.user,
+      numberOfSeats: this.numberOfSeats,
+      movie: this.movie,
+      hour: this.selectedTime,
+      selectedDate: formattedDate,
+      timestamp: new Date()
+    };
+    return this.reservationService.updateReservation(updatedReservation);
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -174,13 +173,13 @@ updateReservation(): Observable<Reservation> {
         };
         console.log("inside the modal reservation: " + reservation)
         return this.reservationService.createReservation(reservation);
-      }  
-    ))
+      }
+      ))
   }
 
   formatDate(date: Date): string {
     const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
@@ -191,6 +190,6 @@ updateReservation(): Observable<Reservation> {
     const fromDate = currentDate.getTime();
     const toDate = new Date(this.movieDateRange.toDate).getTime();
     return date >= fromDate && date <= toDate;
-};
+  };
 
 }

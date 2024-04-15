@@ -44,7 +44,7 @@ import { MatInputModule } from '@angular/material/input';
     ReservationTableComponent,
     HallAdminComponent,
     AddHallComponent,
-    EditHallComponent,
+    EditHallComponent
     
   ],
   imports: [

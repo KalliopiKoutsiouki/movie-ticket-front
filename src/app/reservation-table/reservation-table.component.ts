@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Reservation } from '../model/reservation';
 import { Hour } from '../model/hour';
@@ -7,17 +7,18 @@ import { ReservationService } from '../services/reservation.service';
 import { tap, Subscription } from 'rxjs';
 import { BookingDialogComponent } from '../booking-dialog/booking-dialog.component';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import jsPDF from 'jspdf';
+import QRCode from 'qrcode';
 
 @Component({
   selector: 'app-reservation-table',
   templateUrl: './reservation-table.component.html',
   styleUrl: './reservation-table.component.css'
 })
-export class ReservationTableComponent implements OnInit{
+export class ReservationTableComponent implements OnInit {
 
   reservations: Reservation[] = [];
   private reservationsSubscription: Subscription;
-  // @Output() reservationDeleted = new EventEmitter<Movie>();
 
   constructor(
     private reservationService: ReservationService,
@@ -59,10 +60,10 @@ export class ReservationTableComponent implements OnInit{
         );
       }
     });
-    
+
   }
 
-  fetchUserReservations() : void {
+  fetchUserReservations(): void {
     this.reservationsSubscription = this.reservationService.reservations$.subscribe(
       reservations => {
         this.reservations = reservations;
@@ -72,13 +73,50 @@ export class ReservationTableComponent implements OnInit{
       }
     );
     this.reservationService.getUserReservations()
-    .pipe(
-      tap((reservations: Reservation[]) => {
-        this.reservations = reservations
-      })
-    )
-    .subscribe();
+      .pipe(
+        tap((reservations: Reservation[]) => {
+          this.reservations = reservations
+        })
+      )
+      .subscribe();
     // this.reservationService.getUserReservations().subscribe();
+  }
+
+  downloadTicket(reservation: Reservation) {
+    const ticketData = {
+      reservationid: reservation.id,
+      date: reservation.selectedDate,
+      time: `${reservation.hour.fromHour} - ${reservation.hour.toHour}`,
+      username: reservation.user.userName,
+      numberOfSeats: reservation.numberOfSeats,
+      movieName: reservation.movie.name,
+      hallName: reservation.movie.hall.name,
+      userEmail: reservation.user.email
+    };
+
+    const pdf = new jsPDF();
+    const formattedTicketData = `
+            Reservation ID: ${ticketData.reservationid}
+            Date: ${ticketData.date}
+            Time: ${ticketData.time}
+            Username: ${ticketData.username}
+            Seats: ${ticketData.numberOfSeats}
+            Hall: ${ticketData.hallName}
+            Email: ${ticketData.userEmail}
+          `;
+    QRCode.toDataURL(formattedTicketData, (err, url) => {
+      if (err) {
+        console.error('Error generating QR code:', err);
+        return;
+      }
+      pdf.text(formattedTicketData, 10, 10);
+      const qrCodeWidth = 50;
+      const qrCodeHeight = 50;
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const qrCodeX = pdfWidth - qrCodeWidth - 10;
+      pdf.addImage(url, 'PNG', qrCodeX, 10, qrCodeWidth, qrCodeHeight);
+      pdf.save(`${ticketData.username}.pdf`);
+    });
   }
 
 }

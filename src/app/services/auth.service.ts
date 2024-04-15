@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../environment';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable(
   {providedIn: 'root'}
@@ -17,25 +20,32 @@ export class AuthService {
     }),
     responseType: 'text'
   };
+  errorMessageSubject: Subject<string> = new Subject<string>();
 
   // private tokenUrl = 'https://oauth2.googleapis.com/token';
   // private clientId = '409672159858-77ue31tdiduh4r0ap8o1vb1moud74p9r.apps.googleusercontent.com';
   // private clientSecret = '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';
   // private redirectUri = 'http://localhost:4200/home/login/oauth2/code/google';
 
-  constructor(private http:HttpClient, private router: Router) {
+  constructor(private http:HttpClient, private router: Router, 
+    private snackBar: MatSnackBar,) {
     this.checkToken(); 
   }
 
   login(username: string, password: string) {
     return this.http.post<string>(`${this.baseUrl}/auth/generateToken`, { username, password }, this.headerOptions)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        const errorMessage = `Invalid credentials, please try again`;
+        this.errorMessageSubject.next(errorMessage);
+        return throwError(errorMessage);
+      }),
+    )
       .subscribe(response => {
         const token = response;
-        console.log(token);
         if (token) {
           localStorage.setItem('currentUser', JSON.stringify({ username, token }));
           localStorage.setItem('userName', username);
-          
           this.loggedIn.next(true);
           this.router.navigate(['/home']);
         }
@@ -74,7 +84,6 @@ export class AuthService {
 
   setAccessToken(token: string, username: string) {
     localStorage.setItem('currentUser', JSON.stringify({ username, token }));
-    // sessionStorage.setItem('accessToken', token);
   }
 
   getJwtToken():string | null {
@@ -89,16 +98,7 @@ export class AuthService {
     return this.http.get(googleLoginUrl)
   }
 
-  // isLoggedIn(): Observable<boolean> {
-  //   return this.loggedIn.asObservable();
-  // }
-
-  // isLoggedIn(): boolean {
-  //   return !!localStorage.getItem('currentUser'); 
-  // }
-
   logout() {
-    // Remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.loggedIn.next(false);
   }
@@ -106,7 +106,7 @@ export class AuthService {
   getCurrentUser(): any {
     const currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
-      return JSON.parse(currentUser); // Parse currentUser and return user details
+      return JSON.parse(currentUser);
     }
     return null;
   }

@@ -1,47 +1,45 @@
 .table {
     width: 100%;
-    margin: 0 auto; /* Center the table horizontally */
+    margin: 0 auto; 
 }
 
 .table td:nth-child(2) {
-    /* max-width: 200px; Fixed width for the second column */
-    overflow: hidden; /* Hide overflow content */
-    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
+
+    overflow: hidden; 
+    text-overflow: ellipsis; 
 }
 
 .table th {
     font-size: smaller;
     color: white;
-    /* border-bottom: 1px solid gray; */
     background-color: black;
 }
 
 .table-container {
-    /* max-width: auto; */
     margin: 50px ;
     padding: 20px;
-    background-color: #fff; /* White */
+    background-color: #fff; 
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .movie-name {
-    font-weight: bold; /* Make the movie name bold */
+    font-weight: bold; 
 }
 
 th {
-    font-size: 20px; /* Adjust the font size as needed */
-    margin: 30px; /* Adjust the margin as needed */
+    font-size: 20px;
+    margin: 30px;
     padding: 15px;
 }
 
 .table td {
-    vertical-align: middle; /* Align content vertically center */
+    vertical-align: middle; 
     text-align: center;
 }
 
 td {
-    /* margin-bottom:50px; */
+
     padding: 10px;
 }
 
