@@ -1,0 +1,11 @@
+<div>
+    <mat-dialog-content>
+      <mat-form-field>
+        <input matInput placeholder="New Hall Name" [(ngModel)]="newHall.name">
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="closeDialog()">Cancel</button>
+      <button mat-button (click)="addHall()">Save</button>
+    </mat-dialog-actions>
+  </div>

@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { OAuthCallbackComponentComponent } from './oauth-callback-component/oauth-callback-component.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { HallAdminComponent } from './hall-admin/hall-admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -11,8 +12,8 @@ const routes: Routes = [
   // { path: 'home/login/oauth2/code/google', component: OAuthCallbackComponentComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegistrationComponent}
-  
+  { path: 'register', component: RegistrationComponent},
+  { path: 'admin/hall', component: HallAdminComponent}
 
 ];
 

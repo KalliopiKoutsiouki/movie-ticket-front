@@ -1,0 +1,28 @@
+<div class="hall-administration">
+
+    <button class="outlined-button" mat-raised-button (click)="openDialog()">Add Hall</button>
+ <br/><br/>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hall of halls">
+          <td>{{ hall.id }}</td>
+          <td>{{ hall.name }}</td>
+          <td class="actions-buttons">
+            <button mat-icon-button color="primary" (click)="openEditDialog(hall)">
+                <mat-icon class="material-icons-outlined">edit</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="confirmDelete(hall)">
+                <mat-icon color="black" aria-hidden="false" aria-label="Outlined delete icon">delete_outline</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

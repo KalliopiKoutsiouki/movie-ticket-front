@@ -1,0 +1,19 @@
+<mat-dialog-content>
+  <mat-form-field>
+    <input matInput placeholder="New Hall Name" [(ngModel)]="newHallName">
+  </mat-form-field>
+  <mat-form-field class="date-picker-input">
+    <input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" [(ngModel)]="startDate">
+    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatePicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="endDatePicker" placeholder="End Date" [(ngModel)]="endDate">
+    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #endDatePicker></mat-datepicker>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="updateHall()">Update</button>
+  <button mat-button (click)="closeDialog()">Cancel</button>
+</mat-dialog-actions>

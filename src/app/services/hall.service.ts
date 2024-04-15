@@ -23,15 +23,4 @@ import { Hour } from '../model/hour';
         };
          return this.http.get<Hall[]>(`${this.baseUrl}/halls/all`, headerOptions)    
       }
-
-    getHoursWithCapacityByHall(hallId:number): Observable<Hour[]> {
-        const token = this.authService.getJwtToken();
-        const headerOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          })
-        };
-
-    }
   }
