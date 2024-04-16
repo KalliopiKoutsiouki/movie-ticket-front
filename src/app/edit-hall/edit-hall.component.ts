@@ -16,8 +16,7 @@ export class EditHallComponent implements OnInit {
   dateRange: DateRange | null;
   selectedStartDate: Date;
   selectedEndDate: Date | null = null;
-  startDate: Date;
-  endDate: Date;
+  updatedDateRange: DateRange | null;
 
   constructor(
     private hallService: HallAdminService,
@@ -44,14 +43,22 @@ export class EditHallComponent implements OnInit {
         console.error('Error updating hall:', error);
       }
     );
+    this.hallService.updateDateRangePerHall(this.hall.id, this.updatedDateRange).subscribe(
+      updatedHall => {
+        this.dialogRef.close({ updatedHall: updatedHall });
+      },
+      error => {
+        console.error('Error updating hall:', error);
+      }
+    );
   }
 
   startDateChanged(event: MatDatepickerInputEvent<Date>) {
-    this.startDate = event.value;
+    this.updatedDateRange.fromDate = event.value;
   }
 
   endDateChanged(event: MatDatepickerInputEvent<Date>) {
-    this.endDate = event.value;
+    this.updatedDateRange.toDate = event.value;
   }
 
   closeDialog(): void {
@@ -61,9 +68,9 @@ export class EditHallComponent implements OnInit {
   fetchDateRange(id: number): void {
     this.hallService.getDateRangesByHall(id).subscribe(dateRange => {
       this.dateRange = dateRange[0];
+      this.updatedDateRange = dateRange[0];
       this.selectedStartDate = new Date(dateRange[0].fromDate);
       this.selectedEndDate = new Date(dateRange[0].toDate);
-      console.log(this.selectedStartDate);
     });
   }
 }

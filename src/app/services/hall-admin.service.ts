@@ -98,6 +98,20 @@ export class HallAdminService {
       );
 }
 
+  updateDateRangePerHall(hallId: number, updatedDateRange: any): Observable<string> {
+    const token = this.authService.getJwtToken();
+    const headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    const url = `${this.baseUrl}/hall/dateRanges/${hallId}`;
+    return this.http.put<string>(url, updatedDateRange, headerOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
   private handleError(error: any) {
     console.error('An error occurred', error);
