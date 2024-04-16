@@ -9,5 +9,6 @@ export interface User {
     email: string;
     userRoles?: string[];
     movies?: Movie[]; 
-    reservation?: any;
+    reservations?: any;
+    mobilePhone?: number;
   }

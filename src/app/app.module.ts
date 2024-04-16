@@ -30,6 +30,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { AddHallComponent } from './add-hall/add-hall.component';
 import { EditHallComponent } from './edit-hall/edit-hall.component';
 import { MatInputModule } from '@angular/material/input';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { MatInputModule } from '@angular/material/input';
     ReservationTableComponent,
     HallAdminComponent,
     AddHallComponent,
-    EditHallComponent
+    EditHallComponent,
+    ProfileComponent
     
   ],
   imports: [

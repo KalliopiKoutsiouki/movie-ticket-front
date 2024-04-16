@@ -37,11 +37,11 @@ export class HomeComponent implements OnInit {
   private fetchCurrentMoviesWithAvailability(): void {
     forkJoin({
       currentMovies: this.fetchCurrentMovies(),
-      userMovies: this.fetchUserWithBookedMovies()
+      userWithMovies: this.fetchUserWithBookedMovies()
     }).subscribe(
-      ({ currentMovies, userMovies }) => {
+      ({ currentMovies, userWithMovies }) => {
         this.currentMovies = currentMovies;
-        this.userMovies = userMovies.movies;
+        this.userMovies = userWithMovies.movies;
         this.updateCurrentMovies();
       },
       (error) => {

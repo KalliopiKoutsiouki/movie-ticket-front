@@ -1,0 +1,55 @@
+/* profile.component.css */
+
+form {
+    width: 100%;
+    /* max-width: 400px; */
+    /* margin: 5 auto; */
+    /* padding: 20px; */
+    /* border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; */
+  }
+  
+  div {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: calc(100% - 10px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .container {
+    width: 80%;
+    max-width: 600px;
+    margin:0 auto;
+    flex-direction: column;
+    display: flex;
+    align-items: center; /* Vertically center the items */
+  }
+  
+  .image-container {
+    /* flex: 1;
+    margin-right: 20px; */
+    margin-bottom: 20px;
+  }
+  
+  .image-container img {
+    width: 100%; /* Image takes up the entire container width */
+    max-width: 100%; /* Ensure image doesn't exceed container width */
+  }
+  
+  form {
+    flex: 2; /* Form container takes up 2/3 of the available space */
+    /* Other form styling */
+  }

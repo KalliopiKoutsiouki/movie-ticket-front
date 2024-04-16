@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="image-container">
+        <!-- <img src="https://www.kicksidema.com/wp-content/uploads/2013/07/Bruce_Lee_Pic_1-1.jpg" alt="Profile Image"> -->
+        <img src="https://images2.fanpop.com/image/photos/13100000/Pulp-Fiction-pulp-fiction-13157412-1920-810.jpg" alt="Profile Image">
+   <h2>About You</h2>
+   
+    </div>
+<form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+    <div>
+      <label for="userName">Username:</label>
+      <input type="text" formControlName="userName" id="userName">
+    </div>
+
+    <div>
+      <label for="firstName">First Name:</label>
+      <input type="text" formControlName="firstName" id="firstName">
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" formControlName="lastName" id="lastName">
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" formControlName="email" id="email">
+    </div>
+    <div>
+      <label for="mobilePhone">Mobile Phone:</label>
+      <input type="text" formControlName="mobilePhone" id="mobilePhone">
+    </div>
+    <button class="purple-button" type="submit">Save</button>
+  </form>
+</div>

@@ -6,6 +6,7 @@
                 <th>HOUR</th>
                 <th>DATE</th>
                 <th>SEATS</th>
+                <th>HALL</th>
                 <th>CHANGE</th>
                 <th>TICKET</th>
             </tr>
@@ -18,6 +19,7 @@
                 <td>{{ reservation.hour.fromHour }} - {{ reservation.hour.toHour }}</td>
                 <td>{{ reservation.selectedDate }} </td>
                 <td>{{ reservation.numberOfSeats }}</td>
+                <td>{{ reservation.movie.hall.name }} </td>
                 <td>
                     <button mat-icon-button color="primary" (click)="editReservation(reservation)">
                         <mat-icon class="material-icons-outlined">edit</mat-icon>

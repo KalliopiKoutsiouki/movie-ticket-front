@@ -68,6 +68,25 @@ export class UserService {
     
   }
 
+  updateUser(userId: number, updatedUser: User): Observable<string> {
+    const token = this.authService.getJwtToken();
+    const headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }),
+      responseType: 'text' as 'json'
+    };
+    return this.http.put<string>(`${this.baseUrl}/users/update/${userId}`, updatedUser, headerOptions)
+      .pipe(
+        catchError(error => {
+          this.handleError(error);
+          return throwError(error);
+        })
+      );
+  }
+
+
   private handleError(error: any): void {
     console.error('HTTP error occurred:', error);
     this.snackBar.open('An error occurred', 'Close', { duration: 3000 });
