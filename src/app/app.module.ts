@@ -31,6 +31,7 @@ import { AddHallComponent } from './add-hall/add-hall.component';
 import { EditHallComponent } from './edit-hall/edit-hall.component';
 import { MatInputModule } from '@angular/material/input';
 import { ProfileComponent } from './profile/profile.component';
+import { UserAdminComponent } from './user-admin/user-admin.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { ProfileComponent } from './profile/profile.component';
     HallAdminComponent,
     AddHallComponent,
     EditHallComponent,
-    ProfileComponent
+    ProfileComponent,
+    UserAdminComponent
     
   ],
   imports: [

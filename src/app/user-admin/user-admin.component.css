@@ -1,0 +1,52 @@
+.user-administration {
+    margin-top: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    margin: 0 auto; /* Center the table horizontally */
+}
+
+.table td:nth-child(2) {
+    /* max-width: 200px; Fixed width for the second column */
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
+}
+
+.table th {
+    font-size: smaller;
+    color: white;
+    /* border-bottom: 1px solid gray; */
+    background-color: black;
+}
+
+.table-container {
+    /* max-width: auto; */
+    margin: 50px ;
+    padding: 20px;
+    background-color: #fff; /* White */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+th {
+    font-size: 20px; /* Adjust the font size as needed */
+    margin: 30px; /* Adjust the margin as needed */
+    padding: 15px;
+}
+
+.table td {
+    vertical-align: middle; /* Align content vertically center */
+    text-align: center;
+}
+
+td {
+    /* margin-bottom:50px; */
+    padding: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    th {
+        font-size: 18px;
+    }
+}

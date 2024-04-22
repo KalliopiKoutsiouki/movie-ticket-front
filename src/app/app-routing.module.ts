@@ -6,6 +6,7 @@ import { OAuthCallbackComponentComponent } from './oauth-callback-component/oaut
 import { RegistrationComponent } from './registration/registration.component';
 import { HallAdminComponent } from './hall-admin/hall-admin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UserAdminComponent } from './user-admin/user-admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'register', component: RegistrationComponent},
-  { path: 'admin/hall', component: HallAdminComponent}
+  { path: 'admin/hall', component: HallAdminComponent},
+  { path: 'admin/users', component: UserAdminComponent}
 
 ];
 
