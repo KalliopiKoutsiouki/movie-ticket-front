@@ -28,19 +28,18 @@ export class UserAdminComponent implements OnInit {
     );
   }
 
-  updateUserRole(user: User, role: String){
+  updateUserRole(user: User, role: string): void {
+    const hasRole = user.userRoles.includes(role);
 
+    if (hasRole) {
+      this.userRoleService.removeUserRole(user.id, role).subscribe(() => {
+        user.userRoles = user.userRoles.filter(r => r !== role);
+      });
+    } else {
+      this.userRoleService.addUserRole(user.id, role).subscribe(() => {
+        user.userRoles.push(role);
+      });
+    }
   }
 
-  addRole() {
-    this.userRoleService.addUserRole(123, 'ROLE_ADMIN').subscribe(response => {
-      console.log(response);
-    });
-  }
-
-  removeRole() {
-    this.userRoleService.removeUserRole(123, 'ROLE_ADMIN').subscribe(response => {
-      console.log(response);
-    });
-  }
 }
