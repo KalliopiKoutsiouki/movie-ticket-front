@@ -5,14 +5,12 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>NAME</th>
-          <th>ACTIONS</th>
+          <th>Hall name</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let hall of halls">
-          <td>{{ hall.id }}</td>
           <td>{{ hall.name }}</td>
           <td class="actions-buttons">
             <button mat-icon-button color="primary" (click)="openEditDialog(hall)">
