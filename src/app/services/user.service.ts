@@ -9,6 +9,7 @@ import { Reservation } from '../model/reservation';
 import { BehaviorSubject, map } from 'rxjs';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TokenService } from './token.service';
 
 
 @Injectable(
@@ -16,10 +17,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 )
 export class UserService {
   private baseUrl = environment.backendBaseUrl;
-  constructor(private http:HttpClient, private router: Router, private authService: AuthService, private snackBar: MatSnackBar) { }
+  constructor(private http:HttpClient, private router: Router, private tokenService: TokenService, private snackBar: MatSnackBar) { }
   
   getAllUsers(): Observable<User[]> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -29,8 +30,19 @@ export class UserService {
      return this.http.get<User[]>(`${this.baseUrl}/users/all`, headerOptions)    
   }
 
+  checkingIn(movieId: number): Observable<User[]> {
+    const token = this.tokenService.getJwtToken();
+    const headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<User[]>(`${this.baseUrl}/reservation/checking-in/${movieId}`, headerOptions)    
+  }
+
   getUserByUserName(userName: string) : Observable<User> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     if (token != null) {
     const headerOptions = {
       headers: new HttpHeaders({
@@ -52,7 +64,7 @@ export class UserService {
   }
   
   getUserById(userId:number): Observable<User> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -69,7 +81,7 @@ export class UserService {
   }
 
   updateUser(userId: number, updatedUser: User): Observable<string> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

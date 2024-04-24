@@ -6,6 +6,7 @@ import { Reservation } from '../model/reservation';
 import { environment } from '../environment';
 import { BehaviorSubject, map } from 'rxjs';
 import { Movie } from '../model/movie';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ReservationService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private tokenService: TokenService
   ) { 
     
   }
@@ -31,7 +32,7 @@ export class ReservationService {
   }
 
   createReservation(reservation: Reservation): Observable<Reservation> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -49,7 +50,7 @@ export class ReservationService {
   }
 
   updateReservation(reservation: Reservation): Observable<Reservation> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ export class ReservationService {
   }
 
   deleteReservation(reservation : Reservation): Observable<void> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
@@ -85,7 +86,7 @@ export class ReservationService {
 
 
   getUserReservations(): Observable<Reservation[]> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

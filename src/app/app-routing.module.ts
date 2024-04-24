@@ -7,6 +7,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { HallAdminComponent } from './hall-admin/hall-admin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserAdminComponent } from './user-admin/user-admin.component';
+import { CheckerComponent } from './checker/checker.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,8 +18,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'register', component: RegistrationComponent},
   { path: 'admin/hall', component: HallAdminComponent},
-  { path: 'admin/users', component: UserAdminComponent}
-
+  { path: 'admin/users', component: UserAdminComponent},
+  { path: 'checker/check-in', component: CheckerComponent}
 ];
 
 @NgModule({

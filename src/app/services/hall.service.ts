@@ -5,16 +5,17 @@ import { Observable} from 'rxjs';
 import { environment } from '../environment';
 import { Hall } from '../model/hall';
 import { Hour } from '../model/hour';
+import { TokenService } from './token.service';
 
 @Injectable(
     {providedIn: 'root'}
   )
   export class HallService {
     private baseUrl = environment.backendBaseUrl;
-    constructor(private http:HttpClient,  private authService: AuthService) { }
+    constructor(private http:HttpClient,  private tokenService: TokenService) { }
 
     getAllHalls(): Observable<Hall[]> {
-        const token = this.authService.getJwtToken();
+        const token = this.tokenService.getJwtToken();
         const headerOptions = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',

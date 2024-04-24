@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="current-date-time">
+        <p>{{ currentDate | date:'fullDate' }}</p>
+        <p>{{ currentDate | date:'shortTime' }}</p>
+      </div>
+      <div class="header">
+        <p>Select a movie:</p>
+      </div>
+    <select class="purple-button" [(ngModel)]="selectedMovie" (change)="onMovieSelectionChange()">
+        <option *ngFor="let movie of movies" [ngValue]="movie">{{ movie.name }}</option>
+      </select>
+    
+    <div class="table-container" *ngIf="users.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>User Email</th>
+            <th>Check in</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.email }}</td>
+            <td>
+              <input type="checkbox" class="styled-checkbox" name="selectedUsers" [value]="user.id" (change)="onCheckboxChange(user.id)">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="no-users gray-background" *ngIf="users.length === 0">
+      No reservations found for the selected movie.
+    </div>
+  </div>
+  

@@ -3,8 +3,8 @@
     src="https://banner2.cleanpng.com/20180323/ape/kisspng-art-film-logo-cinema-clip-art-movie-logo-cliparts-5ab587fb1000c4.1651552415218462670656.jpg"
     alt="Movie Theatre Ticket Logo" height="40" style="margin-right: 16px;">
   <div>
-    <button mat-button class="button-nav" routerLink="/home">Home</button>
-    <button mat-button class="button-nav" routerLink="/profile">Profile</button>
+    <button mat-button class="button-nav" routerLink="/home" *ngIf="!isAdmin">Home</button>
+    <button mat-button class="button-nav" routerLink="/profile" *ngIf="!isAdmin">Profile</button>
     <button mat-button class="button-nav" routerLink="/admin/hall" *ngIf="isAdmin">Admin Hall</button>
     <button mat-button class="button-nav" routerLink="/admin/users" *ngIf="isAdmin">Admin Users</button>
   </div>

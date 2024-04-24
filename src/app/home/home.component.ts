@@ -58,31 +58,6 @@ export class HomeComponent implements OnInit {
   //   // }
   //  } 
 
-  //     getAllUsers() : void {
-  //     this.userService.getAllUsers()
-  //     .pipe(
-  //       tap((users: User[]) => {
-  //         this.users = users;
-  //         console.log(this.users)
-  //       }),
-
-  //     )
-  //     .subscribe();
-  // }
-
-
-  //   getAllMovies() : void {
-  //     this.movieService.getAllMovies()
-  //     .pipe(
-  //       tap((movies: Movie[]) => {
-  //         this.movies = movies;
-  //         console.log(this.movies);
-  //       }),
-
-  //     )
-  //     .subscribe();
-  // }
-
 
   private updateCurrentMovies(): void {
     this.currentMovies.forEach(movie => {
