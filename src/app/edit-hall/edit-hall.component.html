@@ -18,6 +18,14 @@
   <mat-datepicker [startAt]="endDatePicker" #endDatePicker></mat-datepicker>
 </mat-form-field>
 
+<label for="hourInput">Hall hours:</label>
+<div *ngIf="editingHallHours">
+  <div *ngFor="let hallHour of editingHallHours">
+    <input id="hourInput" style="width: 20%;" type="text" [(ngModel)]="hallHour.hour.fromHour" [value]="hallHour.hour.fromHour" [ngModelOptions]="{standalone: true}" /> - <input style="width: 20%;" type="text" [(ngModel)]="hallHour.hour.toHour" [value]="hallHour.hour.toHour" [ngModelOptions]="{standalone: true}"/>
+  </div>
+</div>
+
+
 <div>
   <button mat-button color="primary" (click)="updateHall()">Save Changes</button>
   <button mat-button color="warn" (click)="closeDialog()">Close</button>

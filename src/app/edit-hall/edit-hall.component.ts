@@ -4,6 +4,8 @@ import { Hall } from '../model/hall';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HallAdminService } from '../services/hall-admin.service';
 import { DateRange } from '../model/dateRange';
+import { HallHourService } from '../services/hallHour.service';
+import { HallHour } from '../model/hallhour';
 
 @Component({
   selector: 'app-edit-hall',
@@ -11,15 +13,17 @@ import { DateRange } from '../model/dateRange';
   styleUrl: './edit-hall.component.css'
 })
 export class EditHallComponent implements OnInit {
+
   hall: Hall;
   newHallName: string;
   dateRange: DateRange | null;
   selectedStartDate: Date;
   selectedEndDate: Date | null = null;
   updatedDateRange: DateRange | null;
-
+  editingHallHours: HallHour[];
   constructor(
     private hallService: HallAdminService,
+    private hallHourService: HallHourService,
     public dialogRef: MatDialogRef<EditHallComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { hall: Hall }
   ) {
@@ -30,6 +34,7 @@ export class EditHallComponent implements OnInit {
     this.newHallName = this.data.hall.name;
     this.hall = this.data.hall;
     this.fetchDateRange(this.data.hall.id);
+    this.fetchHallHours(this.data.hall.id);
   }
 
   updateHall(): void {
@@ -51,6 +56,16 @@ export class EditHallComponent implements OnInit {
         console.error('Error updating hall:', error);
       }
     );
+    for (let i = 0; i < this.editHallHours.length; i++) {
+      this.hallHourService.updateHallHour(this.editHallHours[i].id).subscribe(
+        updatedHallHour => {
+          console.log("Hall hour updated");
+        },
+        error => {
+          console.error('Error updating hall:', error);
+        }
+      );
+    }
   }
 
   startDateChanged(event: MatDatepickerInputEvent<Date>) {
@@ -72,5 +87,20 @@ export class EditHallComponent implements OnInit {
       this.selectedStartDate = new Date(dateRange[0].fromDate);
       this.selectedEndDate = new Date(dateRange[0].toDate);
     });
+  }
+
+  fetchHallHours(hallId: number): void {
+    this.hallHourService.getAllHoursByHallId(hallId).subscribe(
+      hallHours => {
+        this.editingHallHours = hallHours; 
+      },
+      error => {
+        console.error('Error fetching hall hours:', error);
+      }
+    );
+  }
+
+  editHallHours() {
+    throw new Error('Method not implemented.');
   }
 }
