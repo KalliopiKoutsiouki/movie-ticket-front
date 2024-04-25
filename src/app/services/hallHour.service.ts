@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environment';
-import { AuthService } from './auth.service';
 import { Observable, map} from 'rxjs';
 import { HallHour } from '../model/hallhour';
+import { TokenService } from './token.service';
 
 
 @Injectable(
@@ -11,10 +11,10 @@ import { HallHour } from '../model/hallhour';
   )
 export class HallHourService {
     private baseUrl = environment.backendBaseUrl;
-    constructor(private http:HttpClient, private authService: AuthService) { }
+    constructor(private http:HttpClient, private tokenService: TokenService) { }
 
     getAllHoursByHallId(hallId:number) : Observable<HallHour[]> {
-        const token = this.authService.getJwtToken();
+        const token = this.tokenService.getJwtToken();
         const headerOptions = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export class HallHourService {
     }
 
     updateHallHour(hallHour: HallHour): Observable<HallHour> {
-      const token = this.authService.getJwtToken();
+      const token = this.tokenService.getJwtToken();
       const headerOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

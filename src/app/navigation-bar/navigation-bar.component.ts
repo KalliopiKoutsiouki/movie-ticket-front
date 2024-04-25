@@ -13,6 +13,7 @@ export class NavigationBarComponent implements OnInit {
   user: any = null;
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
+  isChecker: boolean = false;
   constructor(private router: Router, private authService: AuthService, private userService: UserService) { }
   isDropdownOpen: boolean = false;
 
@@ -24,6 +25,7 @@ export class NavigationBarComponent implements OnInit {
     this.userService.getUserByUserName(this.user.username).subscribe(
       (user: User) => {
         this.isAdmin = user.userRoles.includes('ROLE_ADMIN') || user.userRoles.includes('ROLE_SUPERADMIN');
+        this.isChecker = user.userRoles.includes('ROLE_CHECKER');
       },
       (error) => {
         console.error('Error fetching user:', error);

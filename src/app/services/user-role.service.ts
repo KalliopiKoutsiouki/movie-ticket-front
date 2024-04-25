@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment';
-import { AuthService } from './auth.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,10 @@ export class UserRoleService {
   //todo: add token
 
   private baseUrl = environment.backendBaseUrl;
-  constructor(private http:HttpClient, private authService: AuthService) { }
+  constructor(private http:HttpClient, private tokenService: TokenService) { }
 
   addUserRole(userId: number, role: string): Observable<any> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export class UserRoleService {
   }
 
   removeUserRole(userId: number, role: string): Observable<any> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

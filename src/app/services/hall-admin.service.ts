@@ -6,16 +6,17 @@ import { environment } from '../environment';
 import { Hall } from '../model/hall';
 import { AuthService } from './auth.service';
 import { DateRange } from '../model/dateRange';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HallAdminService {
   private baseUrl = environment.backendBaseUrl;
-  constructor(private http:HttpClient, private authService: AuthService) { }
+  constructor(private http:HttpClient, private tokenService: TokenService) { }
 
   createHall(hall: Hall): Observable<Hall> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ export class HallAdminService {
   }
 
   getAllHalls(): Observable<Hall[]> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -43,7 +44,7 @@ export class HallAdminService {
   }
 
   getHallById(id: number): Observable<Hall> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ export class HallAdminService {
   }
 
   updateHall(id: number, hall: Hall): Observable<Hall> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -71,7 +72,7 @@ export class HallAdminService {
   }
 
   deleteHall(id: number): Observable<void> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -85,7 +86,7 @@ export class HallAdminService {
   }
 
   getDateRangesByHall(id: number): Observable<DateRange[]> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ export class HallAdminService {
 }
 
   updateDateRangePerHall(hallId: number, updatedDateRange: any): Observable<string> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

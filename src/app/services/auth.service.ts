@@ -7,12 +7,16 @@ import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
 import { Subject } from 'rxjs';
+import { UserService } from './user.service';
+import { User } from '../model/user';
 
 @Injectable(
   {providedIn: 'root'}
 )
 export class AuthService {
   private baseUrl = environment.backendBaseUrl;
+  private isAdmin = false;
+  private isCheker = false;
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private headerOptions : any = {
     headers: new HttpHeaders({
@@ -28,11 +32,13 @@ export class AuthService {
   // private redirectUri = 'http://localhost:4200/home/login/oauth2/code/google';
 
   constructor(private http:HttpClient, private router: Router, 
+    private userService:UserService,
     private snackBar: MatSnackBar,) {
     this.checkToken(); 
   }
 
   login(username: string, password: string) {
+   
     return this.http.post<string>(`${this.baseUrl}/auth/generateToken`, { username, password }, this.headerOptions)
     .pipe(
       catchError((error: HttpErrorResponse) => {
@@ -42,12 +48,29 @@ export class AuthService {
       }),
     )
       .subscribe(response => {
+
         const token = response;
         if (token) {
           localStorage.setItem('currentUser', JSON.stringify({ username, token }));
           localStorage.setItem('userName', username);
-          this.loggedIn.next(true);
-          this.router.navigate(['/home']);
+          this.userService.getUserByUserName(username).subscribe(
+            (user: User) => {
+              this.isAdmin = user.userRoles.includes('ROLE_ADMIN') || user.userRoles.includes('ROLE_SUPERADMIN');
+              this.isCheker = user.userRoles.includes('ROLE_CHECKER');
+              this.loggedIn.next(true);
+              if (this.isAdmin){
+                this.router.navigate(['/admin/users'])
+              } else if (this.isCheker) {
+                this.router.navigate(['/checker/check-in'])
+              } else {
+                this.router.navigate(['/home']);
+              }
+            },
+            (error) => {
+              console.error('Error fetching user:', error);
+            }
+          );
+          
         }
       });
   }
@@ -84,13 +107,6 @@ export class AuthService {
 
   setAccessToken(token: string, username: string) {
     localStorage.setItem('currentUser', JSON.stringify({ username, token }));
-  }
-
-  getJwtToken():string | null {
-   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-   const token = currentUser ? currentUser.token : null;
-   return token;
-
   }
 
   loginUrlForGoogle() {

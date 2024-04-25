@@ -32,6 +32,7 @@ import { EditHallComponent } from './edit-hall/edit-hall.component';
 import { MatInputModule } from '@angular/material/input';
 import { ProfileComponent } from './profile/profile.component';
 import { UserAdminComponent } from './user-admin/user-admin.component';
+import { CheckerComponent } from './checker/checker.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { UserAdminComponent } from './user-admin/user-admin.component';
     AddHallComponent,
     EditHallComponent,
     ProfileComponent,
-    UserAdminComponent
+    UserAdminComponent,
+    CheckerComponent
     
   ],
   imports: [

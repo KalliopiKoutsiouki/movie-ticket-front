@@ -13,6 +13,7 @@
         <td>
           <div class="movie-details">
             <div class="movie-name">{{ movie.name }}</div>
+            <div class="">({{ movie.dateRange.fromDate | date:'dd/MM/yyyy'}} - {{ movie.dateRange.toDate | date:'dd/MM/yyyy'}})</div>
             <hr class="rounded">
             <div class="description font-weight-light">
               {{movie.description}}

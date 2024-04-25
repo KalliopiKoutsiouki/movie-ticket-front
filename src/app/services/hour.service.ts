@@ -4,6 +4,7 @@ import { environment } from '../environment';
 import { AuthService } from './auth.service';
 import { Observable} from 'rxjs';
 import { Hour } from '../model/hour';
+import { TokenService } from './token.service';
 
 
 @Injectable(
@@ -11,10 +12,10 @@ import { Hour } from '../model/hour';
   )
 export class HourService {
     private baseUrl = environment.backendBaseUrl;
-    constructor(private http:HttpClient, private authService: AuthService) { }
+    constructor(private http:HttpClient, private tokenService: TokenService) { }
 
 getAllHours() : Observable<Hour[]> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

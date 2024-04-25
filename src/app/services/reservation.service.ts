@@ -6,6 +6,7 @@ import { Reservation } from '../model/reservation';
 import { environment } from '../environment';
 import { BehaviorSubject, map } from 'rxjs';
 import { Movie } from '../model/movie';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ReservationService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private tokenService: TokenService
   ) { 
     
   }
@@ -31,7 +32,7 @@ export class ReservationService {
   }
 
   createReservation(reservation: Reservation): Observable<Reservation> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -48,8 +49,19 @@ export class ReservationService {
     );
   }
 
+  checkingIn(movieId: number): Observable<Reservation[]> {
+    const token = this.tokenService.getJwtToken();
+    const headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<Reservation[]>(`${this.baseUrl}/reservation/checking-in/${movieId}`, headerOptions)    
+  }
+
   updateReservation(reservation: Reservation): Observable<Reservation> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -66,12 +78,32 @@ export class ReservationService {
     );
   }
 
+  updateReservationToChecked(reservation: Reservation): void {
+    const token = this.tokenService.getJwtToken();
+    const headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+      this.http.post<Reservation>(`${this.baseUrl}/reservation/checkinReservation`, reservation, headerOptions) .subscribe(
+        updatedReservation => {
+          // Do something with the updated reservation if needed
+          console.log('Reservation updated successfully:', updatedReservation);
+        },
+        error => {
+          console.error('Error updating reservation:', error);
+        }
+      )
+  }
+
   deleteReservation(reservation : Reservation): Observable<void> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
       })
+    
     };
     return this.http.delete<void>(`${this.baseUrl}/reservation/delete/${reservation.id}`, headerOptions).pipe(
       map(() => {
@@ -85,7 +117,7 @@ export class ReservationService {
 
 
   getUserReservations(): Observable<Reservation[]> {
-    const token = this.authService.getJwtToken();
+    const token = this.tokenService.getJwtToken();
     const headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
