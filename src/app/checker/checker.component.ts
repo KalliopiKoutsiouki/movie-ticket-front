@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Hall } from '../model/hall';
 import { User } from '../model/user';
-import { UserService } from '../services/user.service';
-import { UserRoleService } from '../services/user-role.service';
 import { Movie } from '../model/movie';
 import { MovieService } from '../services/movies.service';
+import { ReservationService } from '../services/reservation.service';
+import { Reservation } from '../model/reservation';
 
 @Component({
   selector: 'app-checker',
@@ -12,20 +11,18 @@ import { MovieService } from '../services/movies.service';
   styleUrl: './checker.component.css'
 })
 export class CheckerComponent implements OnInit{
+  reservations: Reservation[] = [];
   users: User[] = [];
   movies: Movie[] = [];
   selectedMovie: Movie | null = null;
-  selectedUsers: number[] = []; 
   currentDate: Date = new Date();
 
   constructor(
-    private userService: UserService, 
-    private userRoleService: UserRoleService, 
+    private reservationService: ReservationService,
     private movieService: MovieService) { }
 
     ngOnInit(): void {
       this.loadMovies()
-      // this.loadUsers(this.selectedMovie);
     }
 
 
@@ -43,10 +40,9 @@ export class CheckerComponent implements OnInit{
 
     onMovieSelectionChange() {
       if (this.selectedMovie) {
-        this.userService.checkingIn(this.selectedMovie.id).subscribe(
-          users => {
-            this.users = users;
-            console.log("Users after calling checkingIn():", this.users);
+        this.reservationService.checkingIn(this.selectedMovie.id).subscribe(
+          reservations => {
+            this.reservations = reservations;
           },
           error => {
             console.error('Error loading users:', error);
@@ -55,15 +51,12 @@ export class CheckerComponent implements OnInit{
     }
   }
 
-    onCheckboxChange(userId: number) {
-      const index = this.selectedUsers.indexOf(userId);
-      if (index === -1) {
-        // If user ID is not already in the list, add it
-        this.selectedUsers.push(userId);
+    onCheckboxChange(reservation: Reservation) {
+      if (reservation.checked) {
+        reservation.checked = false;
       } else {
-        // If user ID is already in the list, remove it
-        this.selectedUsers.splice(index, 1);
-      }
-      console.log(this.selectedUsers); // Output the list of selected user IDs
+      reservation.checked = true;
+    }
+      this.reservationService.updateReservationToChecked(reservation);
     }
 }

@@ -11,4 +11,5 @@ export interface Reservation {
     movie: Movie;
     selectedDate: string;
     hour: Hour;
+    checked?: boolean;
 }

@@ -10,7 +10,7 @@
         <option *ngFor="let movie of movies" [ngValue]="movie">{{ movie.name }}</option>
       </select>
     
-    <div class="table-container" *ngIf="users.length > 0">
+    <div class="table-container" *ngIf="reservations.length > 0">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -19,17 +19,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
-            <td>{{ user.email }}</td>
+          <tr *ngFor="let reservation of reservations">
+            <td>{{ reservation.user.email }}</td>
             <td>
-              <input type="checkbox" class="styled-checkbox" name="selectedUsers" [value]="user.id" (change)="onCheckboxChange(user.id)">
+              <input type="checkbox" class="styled-checkbox" name="selectedReservations" [value]="reservation.user.id"  [checked]="reservation.checked"  (change)="onCheckboxChange(reservation)">
             </td>
           </tr>
         </tbody>
       </table>
     </div>
   
-    <div class="no-users gray-background" *ngIf="users.length === 0">
+    <div class="no-users gray-background " *ngIf="reservations.length === 0">
       No reservations found for the selected movie.
     </div>
   </div>

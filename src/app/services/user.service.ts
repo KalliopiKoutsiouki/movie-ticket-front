@@ -30,16 +30,7 @@ export class UserService {
      return this.http.get<User[]>(`${this.baseUrl}/users/all`, headerOptions)    
   }
 
-  checkingIn(movieId: number): Observable<User[]> {
-    const token = this.tokenService.getJwtToken();
-    const headerOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-    };
-    return this.http.get<User[]>(`${this.baseUrl}/reservation/checking-in/${movieId}`, headerOptions)    
-  }
+ 
 
   getUserByUserName(userName: string) : Observable<User> {
     const token = this.tokenService.getJwtToken();

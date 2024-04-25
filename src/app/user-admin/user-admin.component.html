@@ -14,7 +14,7 @@
       <td>{{ user.firstName }}</td>
       <td>{{ user.lastName }}</td>
       <td>
-        <div *ngFor="let role of ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN']">
+        <div *ngFor="let role of ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_CHECKER']">
           <input type="checkbox" [checked]="user.userRoles.includes(role)" (change)="updateUserRole(user, role)">
           <label>{{ role }}</label>
         </div>
