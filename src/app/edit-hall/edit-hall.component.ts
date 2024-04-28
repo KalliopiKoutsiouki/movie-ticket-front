@@ -56,16 +56,16 @@ export class EditHallComponent implements OnInit {
         console.error('Error updating hall:', error);
       }
     );
-     // for (let i = 0; i < this.editingHallHours.length; i++) {
-    //   this.hallHourService.updateHallHour(this.editingHallHours[i]).subscribe(
-    //     updatedHallHour => {
-    //       console.log("Hall hour updated");
-    //     },
-    //     error => {
-    //       console.error('Error updating hall:', error);
-    //     }
-    //   );
-    // }
+     for (let i = 0; i < this.editingHallHours.length; i++) {
+      this.hallHourService.updateHallHour(this.editingHallHours[i]).subscribe(
+        updatedHallHour => {
+          console.log("Hall hour updated");
+        },
+        error => {
+          console.error('Error updating hall:', error);
+        }
+      );
+    }
   }
 
   startDateChanged(event: MatDatepickerInputEvent<Date>) {
