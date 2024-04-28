@@ -184,21 +184,9 @@ export class BookingDialogComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  // dateFilter = (d: Date | null): boolean => {
-  //   const currentDate = new Date();
-  //   const date = d ? d.getTime() : 0;
-  //   const fromDate = currentDate.getTime();
-  //   console.log(currentDate)
-
-  //   const toDate = new Date(this.movieDateRange.toDate).getTime();
-  //   console.log(this.movieDateRange.toDate)
-  //   // console.log(toDate)
-  //   return date >= fromDate && date < toDate;
-  // };
-
   dateFilter = (d: Date | null): boolean => {
     const currentDate = new Date();
-    const date = d || new Date(); // If d is null, use the current date
+    const date = d || new Date(); 
     const fromDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()).getTime();
     
     if (this.movieDateRange && this.movieDateRange.toDate) {
@@ -206,7 +194,7 @@ export class BookingDialogComponent implements OnInit {
         const toDateNumeric = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate()).getTime();
         return date.getTime() >= fromDate && date.getTime() <= toDateNumeric;
     } else {
-        return true; // If toDate is not provided, all dates are allowed
+        return true; 
     }
 };
 

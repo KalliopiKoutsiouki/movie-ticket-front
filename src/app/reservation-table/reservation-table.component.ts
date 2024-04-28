@@ -52,7 +52,6 @@ export class ReservationTableComponent implements OnInit {
           () => {
             console.log('Reservation deleted successfully');
             this.fetchUserReservations();
-            // this.reservationDeleted.emit(reservation.movie); 
           },
           error => {
             console.error('Error deleting reservation:', error);
@@ -79,7 +78,6 @@ export class ReservationTableComponent implements OnInit {
         })
       )
       .subscribe();
-    // this.reservationService.getUserReservations().subscribe();
   }
 
   downloadTicket(reservation: Reservation) {

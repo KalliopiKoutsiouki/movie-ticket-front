@@ -5,6 +5,7 @@
       <th>Username</th>
       <th>First Name</th>
       <th>Last Name</th>
+      <th>Email</th>
       <th>User Roles</th>
     </tr>
   </thead>
@@ -13,8 +14,9 @@
       <td>{{ user.userName }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
       <td>
-        <div *ngFor="let role of ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_CHECKER']">
+        <div *ngFor="let role of ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_CHECKER']">
           <input type="checkbox" [checked]="user.userRoles.includes(role)" (change)="updateUserRole(user, role)">
           <label>{{ role }}</label>
         </div>
