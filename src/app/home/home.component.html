@@ -18,7 +18,11 @@
       </div>
     </mat-tab>
   </div>
-  <mat-tab label="UPCOMING MOVIES">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      UPCOMING MOVIES
+      <span *ngIf="showStar" class="star-icon">★</span>
+    </ng-template>
     <div class="">
       <app-movie-table [movies]="upcomingMovies" type="upcomingMovies"></app-movie-table>
     </div>

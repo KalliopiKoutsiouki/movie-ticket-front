@@ -9,4 +9,5 @@ export interface Movie {
     dateRange: DateRange;
     hall: Hall;
     bookedForUser?:boolean;
+    recommendationRateForUser?: number;
   }

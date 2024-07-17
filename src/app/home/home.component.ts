@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { User } from '../model/user';
 import { Movie } from '../model/movie';
 import { tap } from 'rxjs';
@@ -22,9 +22,10 @@ export class HomeComponent implements OnInit {
   upcomingMovies: Movie[] = [];
   userReservations: Reservation[] = [];
   userMovies: Movie[] = [];
+  showStar: boolean = false;
 
 
-  constructor(private movieService: MovieService, private authService: AuthService, private userService: UserService) { }
+  constructor(private movieService: MovieService, private authService: AuthService, private userService: UserService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.authService.isLoggedIn.subscribe((loggedIn) => {
@@ -32,7 +33,14 @@ export class HomeComponent implements OnInit {
     });
     this.fetchCurrentMoviesWithAvailability();
     this.fetchUpcomingMovies();
+
   };
+
+  checkHighRecommendationRate() {
+    const hasHighRecommendation = this.upcomingMovies.some(movie => movie.recommendationRateForUser !== undefined && movie.recommendationRateForUser > 7.0);
+    this.showStar = hasHighRecommendation;
+    this.cdr.detectChanges();
+}
 
   private fetchCurrentMoviesWithAvailability(): void {
     forkJoin({
@@ -80,6 +88,7 @@ export class HomeComponent implements OnInit {
       .pipe(
         tap((movies: Movie[]) => {
           this.upcomingMovies = movies;
+          this.checkHighRecommendationRate();
         }),
       )
       .subscribe();

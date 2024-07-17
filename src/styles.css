@@ -118,6 +118,12 @@ button.outlined-button.disabled-button {
   width: auto; 
 }
 
+.star-icon {
+  color: gold;
+  font-size: 1.5em;
+  margin-left: 5px;
+}
+
 /* button.outlined-button.disabled-button:hover {
     color: white !important; 
   
