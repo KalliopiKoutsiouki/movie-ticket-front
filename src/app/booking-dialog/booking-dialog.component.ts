@@ -64,8 +64,9 @@ export class BookingDialogComponent implements OnInit {
 
   fetchHours(hallId: number): void {
     console.log("inside fetch hours hallid:" + hallId)
-    this.hallHourService.getAllHoursByHallId(hallId).subscribe(
+    this.hallHourService.getAllHoursByHallIdAndMovieId(hallId, this.movie.id).subscribe(
       (hallHours: HallHour[]) => {
+        console.log(hallHours)
         this.proposedTimes = hallHours.map(hallHour => ({
           fromHour: hallHour.hour.fromHour,
           toHour: hallHour.hour.toHour,
@@ -81,7 +82,7 @@ export class BookingDialogComponent implements OnInit {
   }
 
   updateCapacity(hallId: number): void {
-    this.hallHourService.getAllHoursByHallId(hallId).subscribe(
+    this.hallHourService.getAllHoursByHallIdAndMovieId(hallId,this.movie.id).subscribe(
       (hallHours: HallHour[]) => {
         const hallHour = hallHours.find(hallHour => hallHour.hour.id === this.selectedTimeId)
         this.selectedTime.currentCapacity = hallHour.capacity;

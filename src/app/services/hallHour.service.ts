@@ -13,7 +13,7 @@ export class HallHourService {
     private baseUrl = environment.backendBaseUrl;
     constructor(private http:HttpClient, private tokenService: TokenService) { }
 
-    getAllHoursByHallId(hallId:number) : Observable<HallHour[]> {
+    getAllHoursByHallIdAndMovieId(hallId:number, movieId:number) : Observable<HallHour[]> {
         const token = this.tokenService.getJwtToken();
         const headerOptions = {
           headers: new HttpHeaders({
@@ -21,8 +21,19 @@ export class HallHourService {
             'Authorization': `Bearer ${token}`
           })
         };
-        return this.http.get<HallHour[]>(`${this.baseUrl}/hall-hour/all/${hallId}`, headerOptions)    
+        return this.http.get<HallHour[]>(`${this.baseUrl}/hall-hour/all/${hallId}/${movieId}`, headerOptions)    
     }
+
+    getAllHoursByHallId(hallId:number) : Observable<HallHour[]> {
+      const token = this.tokenService.getJwtToken();
+      const headerOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      };
+      return this.http.get<HallHour[]>(`${this.baseUrl}/hall-hour/all/${hallId}`, headerOptions)    
+  }
 
     updateHallHour(hallHour: HallHour): Observable<HallHour> {
       const token = this.tokenService.getJwtToken();
