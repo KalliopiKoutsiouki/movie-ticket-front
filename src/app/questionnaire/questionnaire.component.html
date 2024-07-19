@@ -1,0 +1,46 @@
+<div class="table-container">
+  <form (ngSubmit)="submitQuestionnaire()" #questionnaireForm="ngForm">
+    <h2>Please answer the following questions</h2>
+    <h3>1. Select Your Preference</h3>
+    <table class="table table-striped">
+      <tbody>
+        <tr *ngFor="let movie of movies">
+          <td style="width: 150px;">
+            <img [src]="movie.picture" alt="{{ movie.name }}" class="movie-picture">
+          </td>
+          <td>
+            <div class="movie-details">
+              <div class="movie-name">
+                <label>
+                  <input type="radio" name="movie" [value]="movie.id" [(ngModel)]="selectedMovieId" required>
+                  {{ movie.name }}
+                </label>
+              </div>
+            </div>
+            <div class="description font-weight-light">
+              {{movie.description}}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 20px;">
+      <h3>2. Additional Information</h3>
+      <div>
+        <label>
+          Do you have kids?
+          <input type="radio" name="hasKids" [value]="1" [(ngModel)]="hasKids" required> Yes
+          <input type="radio" name="hasKids" [value]="0" [(ngModel)]="hasKids" required> No
+        </label>
+      </div>
+    </div>
+
+    <div class="button-container" style="margin-top: 20px;">
+      <button type="submit" [disabled]="!questionnaireForm.form.valid" 
+              [ngClass]="{'disabled-button': !questionnaireForm.form.valid, 'enabled-button': questionnaireForm.form.valid}">Submit</button>
+      <button type="button" class="not-now-button" (click)="skipQuestionnaire()">Not Now</button>
+    </div>
+
+  </form>
+</div>

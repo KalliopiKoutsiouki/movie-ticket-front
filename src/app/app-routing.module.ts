@@ -8,18 +8,21 @@ import { HallAdminComponent } from './hall-admin/hall-admin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { CheckerComponent } from './checker/checker.component';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   // { path: 'home/login/oauth2/code/google', component: HomeComponent },
   // { path: 'home/login/oauth2/code/google', component: OAuthCallbackComponentComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'home', component: HomeComponent},
+  { path: 'profile', component: ProfileComponent},
   { path: 'register', component: RegistrationComponent},
   { path: 'admin/hall', component: HallAdminComponent},
   { path: 'admin/users', component: UserAdminComponent},
-  { path: 'checker/check-in', component: CheckerComponent}
+  { path: 'checker/check-in', component: CheckerComponent},
+  { path: 'questionnaire', component: QuestionnaireComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

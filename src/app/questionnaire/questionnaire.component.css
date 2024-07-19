@@ -1,0 +1,112 @@
+.table {
+    width: 100%; 
+    margin: 0 auto; 
+  }
+  
+  .table td:nth-child(2) {
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+}
+  .table th {
+    color: grey;
+  }
+
+  .table-container {
+    max-width: 60vw;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff; 
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+ 
+ .movie-dates{
+  color: gray;
+}
+  .movie-picture {
+    max-width: 100px; 
+}
+
+.movie-name {
+    font-weight: bold; 
+}
+
+
+.description {
+    margin-top: 10px; 
+    font-style: oblique;
+    word-wrap: break-word;
+    white-space: pre-wrap; 
+    
+      
+  }
+
+  .hall-details {
+    margin-top: 10px; 
+    color: #909090;
+  }
+
+
+th {
+  font-size: 20px;
+  margin: 30px;
+  padding: 15px;
+}
+
+td {
+  padding: 30px;
+}
+
+/* Style for the enabled submit button */
+.enabled-button {
+    background-color: #f8f9fa;
+    color: #007bff;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .enabled-button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+
+  /* Style for the disabled submit button */
+  .disabled-button {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  /* Style for the Not Now button */
+.not-now-button {
+    background-color: #f8f9fa;
+    color: #007bff;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .not-now-button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+
+  /* Flex container for button alignment */
+.button-container {
+    display: flex;
+    align-items: center;
+}
+

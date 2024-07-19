@@ -58,12 +58,22 @@ export class AuthService {
               this.isAdmin = user.userRoles.includes('ROLE_ADMIN') || user.userRoles.includes('ROLE_SUPERADMIN');
               this.isCheker = user.userRoles.includes('ROLE_CHECKER');
               this.loggedIn.next(true);
+
               if (this.isAdmin){
                 this.router.navigate(['/admin/users'])
               } else if (this.isCheker) {
                 this.router.navigate(['/checker/check-in'])
               } else {
-                this.router.navigate(['/home']);
+                console.log('User:', user);
+                console.log('user.chosenMovie:', user.chosenMovie);
+                console.log('user.hasKids:', user.hasKids);
+                if (user.chosenMovie && user.hasKids !== null) {
+                  console.log('Redirecting to home');
+                  this.router.navigate(['/home']);
+                } else {
+                  console.log('Redirecting to questionnaire');
+                  this.router.navigate(['/questionnaire']);
+                }
               }
             },
             (error) => {

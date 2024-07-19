@@ -33,6 +33,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ProfileComponent } from './profile/profile.component';
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { CheckerComponent } from './checker/checker.component';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { CheckerComponent } from './checker/checker.component';
     EditHallComponent,
     ProfileComponent,
     UserAdminComponent,
-    CheckerComponent
+    CheckerComponent,
+    QuestionnaireComponent
     
   ],
   imports: [

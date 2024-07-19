@@ -8,8 +8,6 @@
     color: #102829; 
   }
 
-  
-
   .image-container {
     display: flex;
     height: 150px;
@@ -27,5 +25,37 @@
     margin-left:10px;
   }
  
-
+  .questionnaire-warning {
+    background-color: #ffeb3b;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .questionnaire-warning p {
+    font-size: 1.2em;
+    margin: 0 0 10px 0;
+  }
+  
+  .questionnaire-warning button {
+    background-color: #1976d2;
+    color: white;
+    margin-top: 10px;
+    padding: 10px 20px;  /* Add padding to ensure the button has some space around the text */
+    border: none;  /* Remove default border */
+    border-radius: 4px;  /* Add border radius for rounded corners */
+    cursor: pointer;  /* Change cursor to pointer on hover */
+    display: inline-block;  /* Ensure the button size fits its content */
+    width: auto;  /* Ensure the button does not take the full width */
+    font-size: 1em;  /* Ensure the font size is consistent */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Add a subtle shadow */
+    transition: background-color 0.3s ease;  /* Smooth background color transition */
+  }
+  
+  .questionnaire-warning button:hover {
+    background-color: #1565c0;
+  }
 

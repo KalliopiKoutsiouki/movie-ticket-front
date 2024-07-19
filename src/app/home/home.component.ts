@@ -1,13 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { User } from '../model/user';
 import { Movie } from '../model/movie';
-import { tap } from 'rxjs';
+import { catchError, mergeMap, of, tap, throwError } from 'rxjs';
 import { MovieService } from '../services/movies.service';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { Reservation } from '../model/reservation';
 import { UserService } from '../services/user.service';
 import { forkJoin } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -23,9 +26,11 @@ export class HomeComponent implements OnInit {
   userReservations: Reservation[] = [];
   userMovies: Movie[] = [];
   showStar: boolean = false;
+  hasAnsweredQuestionnaire: boolean = true;
 
 
-  constructor(private movieService: MovieService, private authService: AuthService, private userService: UserService, private cdr: ChangeDetectorRef) { }
+  constructor(private movieService: MovieService, private authService: AuthService, private userService: UserService, private cdr: ChangeDetectorRef, private snackBar: MatSnackBar, private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.authService.isLoggedIn.subscribe((loggedIn) => {
@@ -33,8 +38,23 @@ export class HomeComponent implements OnInit {
     });
     this.fetchCurrentMoviesWithAvailability();
     this.fetchUpcomingMovies();
+    this.checkQuestionnaireStatus();
 
   };
+
+  checkQuestionnaireStatus(): void {
+    const userName = localStorage.getItem("userName");
+    if (userName) {
+      this.userService.getUserByUserName(userName).subscribe(user => {
+        this.hasAnsweredQuestionnaire = user.chosenMovie != null && user.hasKids != null;
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  redirectToQuestionnaire(): void {
+    this.router.navigate(['/questionnaire']);
+  }
 
   checkHighRecommendationRate() {
     const hasHighRecommendation = this.upcomingMovies.some(movie => movie.recommendationRateForUser !== undefined && movie.recommendationRateForUser > 7.0);
@@ -74,9 +94,25 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private fetchCurrentMovies() {
-    return this.movieService.fetchCurrentMovies();
+  private fetchCurrentMovies(): Observable<any> {
+    const userName = localStorage.getItem("userName");
+    if (userName) {
+      return this.userService.getUserByUserName(userName).pipe(
+        mergeMap(user => this.movieService.fetchCurrentMovies(user.id)),
+        catchError(error => {
+          console.error('Error fetching user:', error);
+          this.snackBar.open('Failed to load user data', 'Close', { duration: 3000 });
+          return throwError(error);
+        })
+      );
+    } else {
+      console.error('User not found in localStorage');
+      this.snackBar.open('Failed to load user data', 'Close', { duration: 3000 });
+      return of([]);
+    }
   }
+
+
 
   private fetchUserWithBookedMovies() {
     return this.userService.getUserByUserName(localStorage.getItem("userName"));
@@ -84,14 +120,25 @@ export class HomeComponent implements OnInit {
 
 
   fetchUpcomingMovies(): void {
-    this.movieService.fetchUpcomingMovies()
-      .pipe(
+    const userName = localStorage.getItem("userName");
+    if (userName) {
+      this.userService.getUserByUserName(userName).pipe(
+        mergeMap(user => this.movieService.fetchUpcomingMovies(user.id)),
         tap((movies: Movie[]) => {
           this.upcomingMovies = movies;
           this.checkHighRecommendationRate();
+          console.log(this.upcomingMovies);
         }),
-      )
-      .subscribe();
+        catchError(error => {
+          console.error('Error fetching upcoming movies:', error);
+          this.snackBar.open('Failed to load upcoming movies data', 'Close', { duration: 3000 });
+          return throwError(error);
+        })
+      ).subscribe();
+    } else {
+      console.error('User not found in localStorage');
+      this.snackBar.open('Failed to load user data', 'Close', { duration: 3000 });
+    }
   }
 
 }

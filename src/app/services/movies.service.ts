@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable} from 'rxjs';
 import { environment } from '../environment';
 import { Movie } from '../model/movie';
+import { TokenService } from './token.service';
 
 @Injectable(
     {providedIn: 'root'}
   )
   export class MovieService {
     private baseUrl = environment.backendBaseUrl;
-    constructor(private http:HttpClient) { }
+    constructor(private http:HttpClient, private tokenService: TokenService) { }
 
     getAllMovies(): Observable<Movie[]> {
         const headerOptions = {
@@ -21,22 +22,22 @@ import { Movie } from '../model/movie';
          return this.http.get<Movie[]>(`${this.baseUrl}/movies/all`, headerOptions)    
       }
 
-      fetchCurrentMovies(): Observable<Movie[]> {
+      fetchCurrentMovies(userId: number): Observable<Movie[]> {
         const headerOptions = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
           })
         };
-         return this.http.get<Movie[]>(`${this.baseUrl}/movies/currentMovies`, headerOptions)    
+         return this.http.get<Movie[]>(`${this.baseUrl}/movies/currentMovies/${userId}`, headerOptions)    
       }
 
-      fetchUpcomingMovies(): Observable<Movie[]> {
+      fetchUpcomingMovies(userId: number): Observable<Movie[]> {
         const headerOptions = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
           })
         };
-         return this.http.get<Movie[]>(`${this.baseUrl}/movies/upcomingMovies`, headerOptions)    
+         return this.http.get<Movie[]>(`${this.baseUrl}/movies/upcomingMovies/${userId}`, headerOptions)    
       }
 
       fetchNowMovies(): Observable<Movie[]> {
@@ -47,5 +48,26 @@ import { Movie } from '../model/movie';
         };
          return this.http.get<Movie[]>(`${this.baseUrl}/movies/playing-now`, headerOptions)    
       }
+
+      fetchMoviesForQuestionnaire(): Observable<Movie[]> {
+        const headerOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${token}`
+          })
+        };
+         return this.http.get<Movie[]>(`${this.baseUrl}/movies/forQuestionnaire`, headerOptions)    
+      }
+
+      fetchMovieById(movieId: number): Observable<Movie> {
+        const headerOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${token}`
+          })
+        };
+        return this.http.get<Movie>(`${this.baseUrl}/movies/${movieId}`);
+      }
+
    }
    
