@@ -11,4 +11,6 @@ export interface User {
     movies?: Movie[]; 
     reservations?: any;
     mobilePhone?: number;
+    chosenMovie?: Movie;
+    hasKids?: number;
   }
