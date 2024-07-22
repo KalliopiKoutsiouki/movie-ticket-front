@@ -12,10 +12,25 @@
         </td>
         <td>
           <div class="movie-details">
-            <div class="movie-name">{{ movie.name }}
-              <span *ngIf="movie.recommendationRateForUser !== undefined && movie.recommendationRateForUser > 12.0" class="star-icon">★</span>
+            <div class="movie-name">
+              {{ movie.name }}
+              <span *ngIf="movie.recommendationRateForUser !== undefined">
+                <ng-container *ngIf="movie.recommendationRateForUser >= 12.0; else twoStars">
+                  <span class="star-icon">★★★</span>
+                </ng-container>
+                <ng-template #twoStars>
+                  <ng-container *ngIf="movie.recommendationRateForUser >= 10; else oneStar">
+                    <span class="star-icon">★★</span>
+                  </ng-container>
+                </ng-template>
+                <ng-template #oneStar>
+                  <ng-container *ngIf="movie.recommendationRateForUser >= 7">
+                    <span class="star-icon">★</span>
+                  </ng-container>
+                </ng-template>
+              </span>
             </div>
-            
+
             <div class="">({{ movie.dateRange.fromDate | date:'dd/MM/yyyy'}} - {{ movie.dateRange.toDate | date:'dd/MM/yyyy'}})</div>
             <hr class="rounded">
             <div class="description font-weight-light">
