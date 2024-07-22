@@ -1,9 +1,9 @@
 <div class="image-container gray-background">
   <img src="https://cdn.pixabay.com/photo/2014/04/24/17/22/film-331553_1280.png" alt="Image 3" class="image-item">
 </div>
-<div *ngIf="!hasAnsweredQuestionnaire" class="questionnaire-warning">
-  <p>If you want personalized recommendations, please take a moment to answer our questionnaire!</p>
-  <button mat-button (click)="redirectToQuestionnaire()">Answer Questionnaire</button>
+<div *ngIf="!hasAnsweredQuestionnaire" class="questionnaire-reminder">
+  <p class="reminder-text">Please take a moment to answer our questionnaire...</p> 
+  <button mat-button class="reminder-button" (click)="redirectToQuestionnaire()">Go!</button>
 </div>
 <mat-tab-group centered class="custom-tab-group">
   <mat-tab label="PLAYING NOW">
